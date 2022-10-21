@@ -1,0 +1,9 @@
+<div fxLayout="row wrap" fxLayoutGap="32px grid" fxLayoutAlign="flex-start">
+    <div fxFlex="{{percent}}" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let item of items">
+        <ng-container 
+            *ngIf="gridCardTemplateRef" 
+            [ngTemplateOutlet]="gridCardTemplateRef" 
+            [ngTemplateOutletContext]="{$implicit:item}">
+        </ng-container>
+    </div>
+  </div>

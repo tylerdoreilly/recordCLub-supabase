@@ -1,0 +1,16 @@
+<!-- <items-list [items]="items">    
+    <ng-template let-item #header>
+        <mat-list-item>
+            <img mat-list-icon [src]='item.avatar' class="icon-display">
+            <div mat-line>{{item.displayName}}</div>
+        </mat-list-item>
+    </ng-template>
+</items-list> -->
+
+
+<mat-list role="list" class="club-list margin-btm-md">
+    <mat-list-item role="listitem" *ngFor="let item of items">
+        <img mat-list-icon [src]='item.avatar' class="icon-display">
+        <div mat-line>{{item.displayName}}</div>
+    </mat-list-item>
+</mat-list>

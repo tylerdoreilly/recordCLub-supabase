@@ -1,0 +1,31 @@
+.badge{
+    background:rgb(0, 82, 204);
+    border-radius:4px;
+    color:#fff;
+    text-align:center;
+}
+
+.badge.large{
+    height:80px;
+    width:80px;
+    background:rgb(0, 82, 204);
+    border-radius: 4px;
+ }
+
+ .badge.large ::ng-deep .icon-lg{
+    height: 40px;
+    width: 40px;
+    font-size:40px;
+ }
+
+ .badge.medium{
+    height:40px;
+    width:40px;
+    background:rgb(0, 82, 204);
+    border-radius: 4px;
+ }
+
+ .badge.medium{
+    min-width:20px;
+    padding:4px;
+ }

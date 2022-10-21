@@ -1,0 +1,61 @@
+<ng-container *ngIf="filterItems$ | async as filterItems">
+    <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="15px">
+        <auto-complete [parentForm]="albumsFilterForm" formItemCustomName="artist" filterTitle="Filter By Artists" [filterItems]="filterItems[2]"></auto-complete>
+        <auto-complete [parentForm]="albumsFilterForm" formItemCustomName="album" filterTitle="Filter By Albums" [filterItems]="filterItems[1]"></auto-complete>
+        <auto-complete [parentForm]="albumsFilterForm" formItemCustomName="submittedBy" filterTitle="Filter By Member" [filterItems]="filterItems[0]"></auto-complete>
+        <auto-complete [parentForm]="albumsFilterForm" formItemCustomName="sessions" filterTitle="Filter By Session" [filterItems]="filterItems[3]"></auto-complete>
+        <div fxFlex></div>
+        <button mat-stroked-button (click)="toggleView()">toggle View</button>
+    </div>
+    
+   
+</ng-container>
+
+<ng-container *ngIf="filteredAlbums$ | async as albums">
+
+    <ng-container *ngIf="listView">
+        <items-list [items]="albums">
+            <ng-template let-item #header>
+                <mat-list-item (click)="openDialog(item)">
+                    <img mat-list-icon [src]='item.albumCover' class="icon-display">
+                    <div mat-line>{{item.album}}</div>
+                    <div mat-line>By: {{item.name}} </div>
+                    <div mat-line>Submitted By: {{item.submittedBy.displayName}}</div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+            </ng-template>
+        </items-list>
+    </ng-container>
+
+    <ng-container *ngIf="!listView">
+        <items-grid [items]="albums">
+            <ng-template let-item #gridCard>
+                <mat-card class="clickable-card" (click)="openDialog(item)">
+                    <img mat-card-image [src]='item.albumCover'>
+                    <mat-card-header>
+                        <mat-card-title>{{item.album | truncate}}</mat-card-title>
+                        <mat-card-subtitle>By: {{item.name}}</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <div fxLayout="row" fxFlexAlign="space-between start">
+                            <div class="submittedBy">
+                                <div class="label">Submitted By:</div> 
+                                <div class="submitter">{{item.submittedBy.displayName}}</div>
+                            </div>
+                            <div fxFlex></div>
+                            <div>
+                                <badge *ngIf="item?.scoreAverage">{{item?.scoreAverage}}</badge>
+                            </div>
+                        </div>
+                    </mat-card-content> 
+                  </mat-card>
+            </ng-template>
+        </items-grid>
+    </ng-container>
+
+</ng-container>
+
+
+
+
+

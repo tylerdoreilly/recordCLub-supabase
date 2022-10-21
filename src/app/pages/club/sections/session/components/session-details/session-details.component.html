@@ -1,0 +1,14 @@
+<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="15px" class="album-modal-header">
+    <div fxFlex="80px" fxLayoutAlign="start">
+        <badge size="large">
+            <mat-icon [ngStyle]="{'color':'white'}" class="icon-lg">event</mat-icon>
+        </badge>
+    </div>
+    <div>
+      <h1>{{sessionData.title}}</h1>
+      <h2>{{sessionData.season.title}}</h2>
+      <p>{{sessionData.startDate | date: 'mediumDate'}} - {{sessionData.endDate | date: 'mediumDate'}}</p>
+    </div>   
+</div>
+
+<mat-divider></mat-divider>

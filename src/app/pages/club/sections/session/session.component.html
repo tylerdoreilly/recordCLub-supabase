@@ -1,0 +1,34 @@
+<section-header>
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a>Dashboard</a></li>
+        <li class="breadcrumb-item"><a>Club Micro</a></li>
+    </ul>
+    <h1>Session</h1>
+</section-header>
+<ng-container *ngIf="sessionData$ | async as sessionData">
+    <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="25px">
+        <session-details *ngIf="sessionMetaData$" [sessionData]="sessionMetaData$"></session-details>
+        <content-two-col>
+            <ng-container main>
+                <session-albums [albums]="sessionData.albums"></session-albums>
+                <session-songs [songs]="sessionData.songs" (someEvent)="someFunction($event)"></session-songs>
+            </ng-container>
+            <ng-container sidebar>
+                <col-spacer [gap]="'25px'">
+                    <aside-block>
+                        <session-meetup [meetingInfo]="sessionMetaData$"></session-meetup>
+                    </aside-block>
+                    <aside-block>
+                        <session-group [group]="sessionData.groups"></session-group>
+                    </aside-block>
+                    <aside-block>
+                        <session-bracketeer [bracketeer]="sessionData.bracketeer"></session-bracketeer>
+                    </aside-block>
+                </col-spacer>
+               
+               
+               
+            </ng-container>
+        </content-two-col>
+    </div>
+</ng-container>

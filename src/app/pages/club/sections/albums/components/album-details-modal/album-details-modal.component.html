@@ -1,0 +1,44 @@
+<div mat-dialog-title>
+  <ng-container *ngIf="data && albumDetails">
+    <div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="15px" class="album-modal-header">
+      <div fxFlex="180px" fxLayoutAlign="start">
+        <img [src]='albumCover'>
+      </div>
+      <div>
+        <h1>{{data.album.album}}</h1>
+        <h2>{{data.album.name}} - {{data.album.releaseDate | date:'y'}} - {{data.album.trackCount}} songs, {{albumLength}}</h2>
+        <album-tags *ngIf="albumTags" [tags]="albumTags"></album-tags>
+        <album-tags *ngIf="!albumTags" [itunesGenre]="data.album.genreTags"></album-tags>
+      </div>
+     
+    </div>
+  </ng-container>
+</div>
+
+<mat-dialog-content>
+  <ng-container>
+   
+    <mat-tab-group animationDuration="0ms" dynamicHeight [selectedIndex]="tabIndex" #tabs>
+      <mat-tab label="Scores">
+        <ng-container>
+          <album-scores [albumScores]="albumScores" [average]="averageScore" [submittedBy]="submittedBy"></album-scores>
+          <button (click)="addData()">update</button>
+        </ng-container>
+      </mat-tab>
+      
+      <mat-tab label="Tracklist">
+        <album-tracklist [tracklist]="data.album.trackList"></album-tracklist>
+      </mat-tab>
+
+      <mat-tab label="Details">
+        <album-details [summary]="albumSummary"></album-details>
+      </mat-tab>
+    </mat-tab-group>
+
+  </ng-container>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>View Artist Page</button>
+</mat-dialog-actions>

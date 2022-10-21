@@ -1,0 +1,14 @@
+<form class="example-form" [formGroup]="parentForm">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>{{filterTitle}}</mat-label>
+      <input type="text" matInput formControlName="{{formItemCustomName}}" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{option.displayName}}
+        </mat-option>
+      </mat-autocomplete>
+      <button type="button" mat-button *ngIf="parentForm.get(formItemCustomName).value" matSuffix mat-icon-button aria-label="Clear" (click)="resetFilter()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </form>

@@ -1,0 +1,19 @@
+<content-section>
+    <content-section-header title="Upcoming Session">
+
+    </content-section-header>
+    <mat-card>
+        <items-list [items]="sessionsList">
+            <ng-template let-item #header>
+                <mat-list-item [routerLink]="'/club/'+ clubId +'/session/' + item.id" [state]="{data:item}">
+                    <mat-icon mat-list-icon>folder</mat-icon>
+                    <div mat-line>Week {{item.week}}</div>
+                    <!-- <div mat-line> {{item.season.title}} </div>
+                    <div mat-line>{{item.event.startDate | date: 'mediumDate'}} - {{item.event.endDate | date: 'mediumDate'}}</div> -->
+                </mat-list-item>
+                <mat-divider *ngIf="sessionsList.length > 1"></mat-divider>
+            </ng-template>
+        </items-list>
+    </mat-card>
+</content-section>
+

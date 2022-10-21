@@ -1,0 +1,27 @@
+//SCSS Colours
+$bdazzled-blue: rgba(61, 90, 128, 1);
+$dark-sky-blue: rgba(152, 193, 217, 1);
+$light-cyan: rgba(224, 251, 252, 1);
+$burnt-sienna: rgba(238, 108, 77, 1);
+$gunmetal: rgba(41, 50, 65, 1);
+$light-gunmental: lighten($gunmetal, 20%);
+$dark-gunmental: darken($gunmetal, 10%);
+$lazer-green: rgb(1, 255, 199);
+$base-white: #fff;
+$txt-color-muted: #8b949e;
+
+// Current
+$base-white: #fff;
+$light-grey: #dfe1e6;
+$light-grey-hover:rgb(235, 236, 240);
+$light-blugGrey: rgba(9, 30, 66, 0.04);
+$primary-text:rgb(66, 82, 110);
+$text:rgb(66, 82, 110);
+
+$background-light: rgb(244, 245, 247);
+
+
+:root {
+    --lightGrey: #{$light-grey};
+    --text-primary: #{$base-white};
+  }

@@ -1,0 +1,28 @@
+<ng-container *ngIf="size =='small' else medium">
+    <mat-list class="list-sm">
+        <!-- <div mat-subheader>Folders</div> -->
+        <ng-container *ngFor="let item of items">   
+            <ng-container 
+                *ngIf="headerTemplateRef" 
+                [ngTemplateOutlet]="headerTemplateRef" 
+                [ngTemplateOutletContext]="{$implicit:item}">
+            </ng-container>
+        </ng-container>
+       
+      </mat-list>
+</ng-container>
+
+<ng-template #medium>
+    <mat-list>
+        <!-- <div mat-subheader>Folders</div> -->
+        <ng-container *ngFor="let item of items">   
+            <ng-container 
+                *ngIf="headerTemplateRef" 
+                [ngTemplateOutlet]="headerTemplateRef" 
+                [ngTemplateOutletContext]="{$implicit:item}">
+            </ng-container>
+        </ng-container>
+       
+      </mat-list>
+</ng-template>
+

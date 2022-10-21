@@ -1,0 +1,12 @@
+<ng-container *ngIf="summary; else noContent">
+    <p>Album Summary</p>
+
+    <div *ngFor="let item of summary">                 
+        <p [innerHTML]="item" class="album-content lastfm"></p>
+    </div>
+</ng-container>
+
+
+<ng-template #noContent>
+    <no-content>Sorry no details are currently available.</no-content>
+</ng-template>

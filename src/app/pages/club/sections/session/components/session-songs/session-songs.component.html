@@ -1,0 +1,65 @@
+<content-section>
+    <content-section-header title="Bracket Songs">
+        <ng-container actions>
+            <ng-container *ngIf="draggable === false">
+                <button mat-stroked-button (click)="setOrder()">
+                    <mat-icon>reorder</mat-icon>Set Order
+                </button>
+            </ng-container>
+            <ng-container *ngIf="draggable === true">
+                <button mat-stroked-button (click)="cancelOrder()">Cancel</button>
+                <button mat-stroked-button>Save Order</button>
+            </ng-container>
+        </ng-container>
+    </content-section-header>
+    
+    <mat-card>
+        <ng-container *ngIf="draggable === true">
+            <ng-container *ngTemplateOutlet="message"></ng-container>
+        </ng-container>
+    
+     
+        <div class="table" fxLayout="column" 
+            id="songs"
+            cdkDropList
+            #songsTest="cdkDropList" 
+            [cdkDropListData]="songsList"
+            (cdkDropListDropped)="drop($event)">
+            <div class="table__header" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px">
+                <div class="table__col" fxFlex="60px">Song</div>
+                <div class="table__col" fxFlex></div>
+                <div class="table__col" fxFlex>Track #</div>
+                <div class="table__col" fxFlex>Album</div>
+                <div class="table__col" fxFlex="100px" [ngStyle]="{'margin-left':'auto'}">Actions</div>
+            </div>
+    
+            <div class="table__row" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px" *ngFor="let song of songsList, index as i" cdkDrag [cdkDragDisabled]="song.disabled">
+                <div class="table__col" fxFlex="60px">
+                    <img [src]='song.albumCover'>
+                </div>
+                <div class="table__col" fxFlex>
+                    <div>{{song?.trackName}}</div> 
+                    <div>{{song?.name}}</div>
+                </div>
+                <div class="table__col" fxFlex>
+                    {{song?.trackNumber}}
+                </div>
+                <div class="table__col" fxFlex>
+                    {{song?.album}}
+                </div>
+                <div class="table__col" fxFlex="100px" [ngStyle]="{'margin-left':'auto'}">
+                    <mat-icon mat-list-icon cdkDragHandle>drag_indicator</mat-icon>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+    
+</content-section>
+
+
+<!--Templates -->
+<ng-template #message>
+    <div class="message" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="15px">
+     <div class="message-text">Drag songs to set the bracket order :)</div> 
+    </div>
+</ng-template>

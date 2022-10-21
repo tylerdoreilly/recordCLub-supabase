@@ -1,0 +1,12 @@
+<section-header>
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a>Dashboard</a></li>
+        <li class="breadcrumb-item"><a>Club Micro</a></li>
+    </ul>
+    <h1>Sessions</h1>
+</section-header>
+
+<ng-container *ngIf="sessions$ | async as sessions">
+    <sessions-list [sessions]="sessions"></sessions-list>
+    <button (click)="addData()">update</button>
+ </ng-container>

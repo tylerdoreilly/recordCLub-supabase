@@ -1,0 +1,10 @@
+<div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="40px">
+    <div fxFlex="80%">
+        <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="45px">
+            <ng-content select="[main]"></ng-content>
+        </div>   
+    </div>
+    <div fxFlex="20%">
+        <ng-content select="[sidebar]"></ng-content>
+    </div>
+</div>

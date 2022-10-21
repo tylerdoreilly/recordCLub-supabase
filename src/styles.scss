@@ -1,0 +1,40 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import 'buttons';
+
+html, body { height: 100%;  }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.toolbar{
+    border-bottom:1px solid #dfe1e6;
+    position: -webkit-sticky;
+    position: sticky;
+    top:0px;
+}
+.container {
+    // height: 100%;
+    height: calc(100vh - 76px);
+    height: -o-calc(100vh - 76px); /* opera */
+    height: -webkit-calc(100vh -76px); /* google, safari */
+    height: -moz-calc(100vh - 76px); /* firefox */
+    // overflow: hidden;
+}
+ 
+.nav-sidebar {
+  height: 100%;
+  background-color: rgb(244, 245, 247);
+  color: black;
+//   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  position: -webkit-sticky;
+  position: sticky;
+  top:50px;
+}
+ 
+.main-content {
+    height: 100%;
+    background: #fff;
+    padding:0px 40px 40px 40px;
+  
+}
+

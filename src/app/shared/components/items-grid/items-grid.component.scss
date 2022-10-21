@@ -1,0 +1,18 @@
+// .clickable-card{
+//     margin-bottom:32px;
+// }
+
+::ng-deep .mat-card-header .mat-card-header-text {
+    margin: 0px;
+}
+
+::ng-deep .mat-card-header .mat-card-title{
+    font-size:16px !important;
+}
+
+::ng-deep .mat-card-image {
+    width: calc(100%)!important;
+    margin: 0px 0px 12px 0px;
+    display: block;
+    overflow: hidden;
+}

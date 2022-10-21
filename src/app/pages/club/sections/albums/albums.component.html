@@ -1,0 +1,20 @@
+<section-header>
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a>Dashboard</a></li>
+        <li class="breadcrumb-item"><a>Club Micro</a></li>
+    </ul>
+    <h1>Albums</h1>
+</section-header>
+
+<!-- <ng-container *ngIf="filterItems$ | async as filterItems">
+    <a (click)="toggleView()">toggle View</a>
+     <a (click)="fitlerTest()">test Filter</a> 
+    <filter-group (emitFilters)="filterTest($event)">
+        <auto-complete filterTitle="Filer By Artists" [filterItems]="filterItems[2]"></auto-complete>
+    </filter-group>
+   
+</ng-container> -->
+
+<ng-container *ngIf="allAlbums">
+    <albums-list></albums-list>
+</ng-container>

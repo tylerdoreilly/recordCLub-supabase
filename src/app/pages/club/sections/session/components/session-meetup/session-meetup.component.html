@@ -1,0 +1,16 @@
+<div class="aside-title">Meetup</div>
+<div class="meeting-details" fxLayout="column" fxlayoutAlign="start stretch" fxLayoutGap="15px">
+    <div class="meeting-details-list" fxLayout="column" fxlayoutAlign="start stretch" fxLayoutGap="10px">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+            <mat-icon>today</mat-icon>
+            <div>{{meetingInfo.meetupDate | date:'mediumDate'}}</div>   
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+            <mat-icon>schedule</mat-icon>
+            <div>{{meetingInfo.meetupTime | date:'shortTime'}}</div>   
+        </div>
+    </div>
+    
+    
+    <button mat-raised-button>Join Meeting</button>
+</div>

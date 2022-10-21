@@ -1,0 +1,11 @@
+<h1>My Clubs</h1>
+
+<div fxLayout="row wrap" fxLayoutGap="32px" fxLayoutAlign="flex-start">
+  <ng-container *ngFor="let club of clubs">
+    <mat-card class="clickable-card" fxFlex="0 1 calc(33.3% - 32px)" [routerLink]="['/club', club.id]">
+        <div class="club-avatar"></div>
+        <mat-card-title>{{club.name}}</mat-card-title>
+        <mat-card-subtitle>{{club.description}}</mat-card-subtitle>      
+      </mat-card>
+  </ng-container>
+</div>

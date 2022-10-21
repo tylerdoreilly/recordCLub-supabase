@@ -1,0 +1,42 @@
+@import 'colours';
+
+::ng-deep .mat-tab-body-content {
+    height: 100%;
+    padding-top:20px;
+    overflow: auto;
+}
+
+.app-header{
+    height:70px;
+    padding:0px 20px;
+    position:relative;
+    z-index:100;
+}
+.app-header::after {
+    height: 4px;
+    position: absolute;
+    top: 100%;
+    right: 0px;
+    left: 0px;
+    background: linear-gradient(rgba(9, 30, 66, 0.13) 0px, rgba(9, 30, 66, 0.13) 1px, rgba(9, 30, 66, 0.08) 1px, rgba(9, 30, 66, 0) 4px);
+    content: "";
+}
+.app-logo-wrapper{
+    width:40px;
+    height:40px;
+    background:$base-white;
+    border-radius:2px;
+    margin-right:15px;
+}
+
+.mat-icon.app-logo{
+    width:40px;
+    height:40px;
+    font-size:40px;
+    color:$burnt-sienna;
+}
+
+.app-brand{
+    font-size:20px;
+    color:$primary-text
+}

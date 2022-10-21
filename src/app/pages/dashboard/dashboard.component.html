@@ -1,0 +1,6 @@
+<p>dashboard works!</p>
+
+<ng-container *ngIf="clubs$ | async as clubs">
+    <clubs-list [clubs]="clubs"></clubs-list>
+</ng-container>
+

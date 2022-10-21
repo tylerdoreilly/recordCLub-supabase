@@ -1,0 +1,9 @@
+<div class="list-title">Group</div>
+<items-list [items]="group" [size]="'small'">
+    <ng-template let-item #header>
+        <mat-list-item>
+            <img mat-list-icon [src]='item.avatar'>
+            <div mat-line>{{item.displayName}}</div>
+        </mat-list-item>
+    </ng-template>
+</items-list>

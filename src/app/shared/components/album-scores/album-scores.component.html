@@ -1,0 +1,30 @@
+<ng-container *ngIf="albumScores; else noContent">
+  <div class="table" fxLayout="column" >
+    <div class="table__header" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px">
+      <div class="table__col" fxFlex="20px">#</div>
+      <div class="table__col" fxFlex>Reviewer</div>
+      <div class="table__col" fxFlex>Score</div>
+    </div>
+    <div class="table__row" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px" *ngFor="let item of albumScores; let i = index">
+      <div class="table__col" fxFlex="20px">{{i + 1}}</div>
+      <div class="table__col" fxFlex>
+        {{item?.displayName}} 
+        <span class="album-submitter" *ngIf="item?.submittedBy">({{item?.submittedBy}})</span>
+      </div>
+      <div class="table__col" fxFlex>
+        {{item?.score}} 
+      </div>
+    </div>
+    <div class="table__row" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+      <div class="table__col" fxFlex="20px"> </div>
+      <div class="table__col" fxFlex><span class="average-score">Average Score</span></div>
+      <div class="table__col" fxFlex><span class="average-score">{{average}}</span></div>
+    </div>
+  </div>
+</ng-container>
+
+
+<ng-template #noContent>
+  <no-content>No scores have been added yet.</no-content>
+</ng-template>
+

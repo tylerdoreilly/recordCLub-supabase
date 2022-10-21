@@ -1,0 +1,72 @@
+<content-section>
+    <content-section-header title="{{title}}">
+        <ng-container actions>
+            <button mat-raised-button [matMenuTriggerFor]="viewOtions" fxFlexAlign="end">
+                <mat-icon>visibility</mat-icon>
+                View
+              </button>
+        </ng-container> 
+    </content-section-header>
+    <ng-container *ngIf="layout == 'list'" [ngTemplateOutlet]="list"></ng-container>
+    <ng-container *ngIf="layout == 'grid'" [ngTemplateOutlet]="grid"></ng-container>
+</content-section>
+
+
+
+<ng-template #list>
+    <items-list [items]="items">
+        <ng-template let-item #header>
+            <mat-list-item>
+                <mat-icon mat-list-icon>folder</mat-icon>
+                <div mat-line>{{item.album}}</div>
+                <div mat-line>By: {{item.name}} </div>
+                <div mat-line>Submitted By: {{item.submittedBy.displayName}}</div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+        </ng-template>
+    </items-list>
+</ng-template>
+
+<ng-template #grid>
+    <items-grid [items]="items">
+        <ng-template let-item #gridCard>
+            <mat-card class="clickable-card">
+                <img mat-card-image [src]='item.albumCover'>
+                <mat-card-header>
+                    <mat-card-title>{{item.album | truncate}}</mat-card-title>
+                    <mat-card-subtitle>By: {{item.name}}</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <div fxLayout="row" fxFlexAlign="space-between start">
+                        <div class="submittedBy">
+                            <div class="label">Submitted By:</div> 
+                            <div class="submitter">{{item.submittedBy.displayName}}</div>
+                        </div>
+                        <div fxFlex></div>
+                        <div>
+                            <badge *ngIf="item?.scoreAverage">{{item?.scoreAverage}}</badge>
+                        </div>
+                    </div>
+                </mat-card-content> 
+              </mat-card>
+        </ng-template>
+    </items-grid>
+</ng-template>
+
+<mat-menu #viewOtions="matMenu">
+    <button mat-menu-item  (click)="switchView('list')">
+        <mat-icon>view_list</mat-icon>
+        <span>List View</span>
+    </button>
+    <button mat-menu-item  (click)="switchView('grid')">
+        <mat-icon>view_module</mat-icon>
+        <span>Grid View</span>
+    </button>
+    <button mat-menu-item  (click)="switchView('table')">
+        <mat-icon>view_module</mat-icon>
+        <span>Table View</span>
+    </button>
+    <button mat-menu-item >
+        <span>Album Page</span>
+      </button>
+  </mat-menu>

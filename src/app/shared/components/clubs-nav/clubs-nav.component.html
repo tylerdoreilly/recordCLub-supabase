@@ -1,0 +1,6 @@
+<mat-list role="list" class="club-list margin-btm-md">
+    <mat-list-item role="listitem" [routerLink]="['/club/', club_id]"><mat-icon>view_quilt</mat-icon>Overview</mat-list-item>
+    <mat-list-item role="listitem" [routerLink]="['/club/' + club_id + '/sessions']"><mat-icon>today</mat-icon>Sessions</mat-list-item>
+    <mat-list-item role="listitem" [routerLink]="['/club/' + club_id + '/albums']"><mat-icon>album</mat-icon>Albums</mat-list-item>
+    <mat-list-item role="listitem" [routerLink]="['/club/' + club_id + '/songs']"><mat-icon>queue_music</mat-icon>Songs</mat-list-item>
+</mat-list>

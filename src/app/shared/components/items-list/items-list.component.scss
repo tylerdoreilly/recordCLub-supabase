@@ -1,0 +1,31 @@
+@import 'colours';
+@import 'utility';
+
+.mat-list.list-sm{
+    margin-top:10px;
+}
+
+
+::ng-deep .mat-list.list-sm .mat-list-item {
+    font-size:14px;
+    border-radius:4px;
+    height:40px;
+    color:$primary-text
+}
+
+::ng-deep .mat-list.list-sm .mat-list-item:hover {
+    background:$light-grey-hover;
+    cursor:pointer;
+ }
+
+ ::ng-deep .mat-list.list-sm .mat-list-item .mat-icon{
+    margin-right:12px;
+ }
+
+ ::ng-deep .mat-list.list-sm .mat-list-item .mat-list-item-content{
+    padding-left:8px;
+ }
+
+ ::ng-deep .mat-list.list-sm .mat-list-item .mat-list-text{
+    padding-left:0px;
+ }

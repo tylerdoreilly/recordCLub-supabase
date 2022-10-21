@@ -1,0 +1,13 @@
+@import 'colours';
+
+.club-logo{
+    width:40px;
+    height:40px;
+    background:$bdazzled-blue;
+    border-radius:2px;
+}
+
+.club-name{
+    color:$primary-text;
+    font-weight:bold;
+}

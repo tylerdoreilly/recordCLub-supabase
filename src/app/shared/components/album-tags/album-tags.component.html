@@ -1,0 +1,11 @@
+<ng-container *ngIf="albumTags; else other">
+    <mat-chip-list>
+        <mat-chip *ngFor="let tag of albumTags">{{tag.name}}</mat-chip>
+    </mat-chip-list>
+</ng-container>
+
+<ng-template #other>
+    <mat-chip-list>
+        <mat-chip *ngFor="let tag of itunesGenre">{{tag.name}}</mat-chip>
+    </mat-chip-list>
+  </ng-template>
