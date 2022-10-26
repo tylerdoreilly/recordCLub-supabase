@@ -12,9 +12,18 @@ export const environment = {
   storageBucket: "record-club-7deae.appspot.com",
   messagingSenderId: "119903254637",
   appId: "1:119903254637:web:ed465da3b4fb64b2392764",
-  measurementId: "G-VL3GN7MDXV"
-  }
+  measurementId: "G-VL3GN7MDXV",
+ 
+  },
+  supabaseUrl: 'https://vetsfcctlybskousxgie.supabase.co',
+  supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZldHNmY2N0bHlic2tvdXN4Z2llIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjYzODY2MDksImV4cCI6MTk4MTk2MjYwOX0.LclKlKJUMzUGmnjERbyLa5NmOxG3hckOLxY9kDIwSxY',
 };
+
+// export const environment = {
+//   production: false,
+//   supabaseUrl: 'https://vetsfcctlybskousxgie.supabase.co',
+//   supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZldHNmY2N0bHlic2tvdXN4Z2llIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjYzODY2MDksImV4cCI6MTk4MTk2MjYwOX0.LclKlKJUMzUGmnjERbyLa5NmOxG3hckOLxY9kDIwSxY',
+// }
 
 /*
  * For easier debugging in development mode, you can import the following file

@@ -7,7 +7,7 @@
 </section-header>
 <ng-container *ngIf="sessionData$ | async as sessionData">
     <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="25px">
-        <session-details *ngIf="sessionMetaData$" [sessionData]="sessionMetaData$"></session-details>
+        <session-details *ngIf="sessionData" [sessionData]="sessionData.session[0]"></session-details>
         <content-two-col>
             <ng-container main>
                 <session-albums [albums]="sessionData.albums"></session-albums>
@@ -16,13 +16,13 @@
             <ng-container sidebar>
                 <col-spacer [gap]="'25px'">
                     <aside-block>
-                        <session-meetup [meetingInfo]="sessionMetaData$"></session-meetup>
+                       <session-meetup [meetingInfo]="sessionData.session[0]"></session-meetup>
                     </aside-block>
                     <aside-block>
                         <session-group [group]="sessionData.groups"></session-group>
                     </aside-block>
                     <aside-block>
-                        <session-bracketeer [bracketeer]="sessionData.bracketeer"></session-bracketeer>
+                       <session-bracketeer [bracketeer]="sessionData.session[0].bracketeer"></session-bracketeer>
                     </aside-block>
                 </col-spacer>
                

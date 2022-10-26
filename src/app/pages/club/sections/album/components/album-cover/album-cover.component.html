@@ -1,0 +1,11 @@
+<ng-container *ngIf="lgCover">
+    <div class="album-cover">
+        <img [src]='albumCover'>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="!lgCover">
+    <div class="album-cover default" fxLayoutAlign="center center">
+        <img [src]='albumCover'>
+    </div>
+</ng-container>

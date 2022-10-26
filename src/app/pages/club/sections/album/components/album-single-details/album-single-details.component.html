@@ -1,0 +1,68 @@
+<content-section>
+  <content-section-header title="Album Details">
+  </content-section-header>
+
+  <mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Album Summary</mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <ng-container *ngIf="albumSummary; else noContent">    
+        <div *ngFor="let item of albumSummary">                 
+            <p [innerHTML]="item" class="album-content lastfm"></p>
+        </div>
+        </ng-container>
+
+    </mat-expansion-panel>
+  
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Personnel / Credits</mat-panel-title>        
+      </mat-expansion-panel-header>
+
+      <ng-container *ngIf="wikipediaCredits$ | async as credits; else noCredits">
+        <div [innerHTML]="credits" class="album-content"></div>   
+      </ng-container>
+      
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Background</mat-panel-title>    
+      </mat-expansion-panel-header>
+       <ng-container *ngIf="wikiBackground$ | async as background; else noBackground">
+        <div [innerHTML]="background" class="album-content"></div>   
+      </ng-container>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Recording</mat-panel-title>    
+      </mat-expansion-panel-header>
+       <ng-container *ngIf="wikiRecording$ | async as recording; else noBackground">
+        <div [innerHTML]="recording" class="album-content"></div>   
+      </ng-container>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+</content-section>
+
+
+<!-- Templates -->
+
+<ng-template #noContent>
+    <no-content>Sorry no details are currently available.</no-content>
+</ng-template>
+
+<ng-template #noCredits>
+  <no-content>Sorry no album credits are currently available.</no-content>
+</ng-template>
+
+<ng-template #noBackground>
+  <no-content>Sorry no background information is currently available.</no-content>
+</ng-template>
+
+<ng-template #noRecording>
+  <no-content>Sorry no recording information is currently available.</no-content>
+</ng-template>

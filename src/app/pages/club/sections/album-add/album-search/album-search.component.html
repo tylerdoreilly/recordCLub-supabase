@@ -1,0 +1,45 @@
+<form  [formGroup]="parentForm">
+  <mat-form-field class="example-full-width" appearance="fill" fxFlexFill>
+    <mat-label>Search Albums</mat-label>
+    <input matInput placeholder="Search Albums" type="text" autofocus formControlName="album">
+    <button type="button" mat-button *ngIf="parentForm.get('album').value" matSuffix mat-icon-button aria-label="Clear" (click)="resetFilter()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</form>
+
+
+
+  <!-- <div>
+    <mat-form-field fxFlexFill>
+      <input matInput placeholder="Search" aria-label="State" [matAutocomplete]="auto" [formControl]="searchMoviesCtrl">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
+        <ng-container *ngIf="!isLoading">
+          <mat-option *ngFor="let movie of filteredMovies" [value]="movie.artistName">
+            <div class="multiline-option" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="10px">
+              <div>
+                <img [src]='movie.artworkUrl60'>
+              </div>
+              <div>
+                <div>{{movie.artistName}}</div>
+                <div>{{movie.collectionName}}</div>
+              </div>
+              
+            </div>
+           
+          </mat-option>
+        </ng-container>
+      </mat-autocomplete>
+    </mat-form-field>
+  
+    <br>
+  
+  <ng-container *ngIf="errorMsg; else elseTemplate">
+    {{errorMsg}}
+  </ng-container>
+  <ng-template #elseTemplate>
+    <h5>Selected Value: {{searchMoviesCtrl.value}}</h5>
+  </ng-template>
+  
+  </div> -->

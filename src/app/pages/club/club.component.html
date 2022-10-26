@@ -3,9 +3,9 @@
   <div class="nav-sidebar" fxFlex="250px">
     <nav-header></nav-header>
     <clubs-nav></clubs-nav>
-    <ng-container *ngIf="club$ | async as club">
+    <ng-container *ngIf="members$ | async as members">
       <div class="nav-section-header">Members</div>
-      <members [items]="club.members"></members>
+      <members [items]="members.data"></members>
     </ng-container>
    
   </div>

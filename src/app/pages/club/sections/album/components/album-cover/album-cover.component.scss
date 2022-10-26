@@ -1,0 +1,12 @@
+//Import
+@import 'colours';
+
+.album-cover{
+    height:174px;
+    width:174px;
+}
+
+.album-cover.default{
+    border: 1px solid $light-grey;
+    background: $base-white;
+}

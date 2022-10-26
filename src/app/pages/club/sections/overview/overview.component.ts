@@ -1,18 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { Observable, forkJoin, combineLatest, of} from 'rxjs';
-import { switchMap, mergeMap, map, tap } from 'rxjs/operators';
+import { Observable, forkJoin, combineLatest, of, from} from 'rxjs';
+import { switchMap, mergeMap, map, tap,  } from 'rxjs/operators';
 
 // Services
 import { AuthService } from "../../../../shared/services/auth.service";
 import { ClubsService } from '../../../../shared/services/clubs.service';
 import { SessionsService } from '../../../../shared/services/sessions.service';
 import { AlbumsService } from '../../../../shared/services/albums.service';
+import { SupabaseService } from '../../../../shared/services/supabase.service';
 
 // Models
 import { Club } from '../../../../shared/models/clubs';
-import { Session } from '../../../../shared/models/session';
+import { Session, SessionNew } from '../../../../shared/models/session';
 import { Album } from '../../../../shared/models/album';
 
 @Component({
@@ -32,10 +33,14 @@ export class OverviewComponent implements OnInit {
   public albumFeatured$: Observable<Album[]>;
   public clubData$: Observable<any>
 
+  //Supabase
+  public sbLatestSession$:Observable<any>
+
   constructor(
     private _clubsService : ClubsService,
     private _sessionsService : SessionsService,
     private _albumService : AlbumsService,
+    private _supabaseService : SupabaseService,
     private actRoute: ActivatedRoute,
     public authService: AuthService,
     public afStorage: AngularFireStorage,
@@ -43,25 +48,27 @@ export class OverviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.actRoute.snapshot.paramMap.get('id');
-    this. getData();
+    this.getData();
   }
 
   getData():void{
     this.club$ = this._clubsService.getClub(this.id);
     this.sessions$ = this._sessionsService.getLatestSession(this.id);
+    this.sbLatestSession$ = from(this._supabaseService.getSBUpcomingSession())
     this.albumsOfWeek$ = this._albumService.getAlbumsOfWeek();
     this.albumFeatured$ = this._albumService.getRandomAlbum();
 
-    this.clubData$ = combineLatest([this.club$, this.sessions$, this.albumsOfWeek$, this.albumFeatured$])
+    this.clubData$ = combineLatest([this.club$, this.sessions$, this.albumsOfWeek$, this.albumFeatured$, this.sbLatestSession$])
     .pipe(
-      map(([club, sessions, albumsOfWeek, randomAlbum]) => ({
+      map(([club, sessions, albumsOfWeek, randomAlbum, latestSession]) => ({
         club,
         sessions,
         albumsOfWeek,
-        randomAlbum
+        randomAlbum,
+        latestSession
       }))
     )
-    this.clubData$.subscribe(x=>console.log('sessionData',x))
+    this.clubData$.subscribe(x=>console.log('CLub Overview Data',x))
   }
 
 }

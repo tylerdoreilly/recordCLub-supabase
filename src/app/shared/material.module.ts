@@ -13,6 +13,10 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatBadgeModule} from '@angular/material/badge';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
   exports:[
@@ -29,7 +33,11 @@ import {MatMenuModule} from '@angular/material/menu';
     MatTabsModule,
     MatBadgeModule,
     DragDropModule,
-    MatMenuModule
+    MatMenuModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    NgxMaterialTimepickerModule,
+    MatExpansionModule
   ],
   // declarations: [],
   // imports: [

@@ -12,6 +12,7 @@ export class SessionDetailsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.sessionData)
   }
 
 }

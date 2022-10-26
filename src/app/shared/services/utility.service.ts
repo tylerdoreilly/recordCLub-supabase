@@ -7,6 +7,8 @@ export class UtilityService {
 
   constructor() { }
 
+  // Album Data Utilities
+
   getAlbumCover(res:any, size:string):void{
     const albumCovers = res.album.image;
     const lgImg = albumCovers.find(imgs => imgs.size == size);
@@ -22,6 +24,16 @@ export class UtilityService {
     const formatLength = this.timeConversion(albumLength)
    return formatLength
   }
+
+  getTracklist(albumInfo:any){
+    return albumInfo.results.slice(1);
+  }
+
+  formatAlbumTitle(albumTitle){
+    return albumTitle.replace(/ \([\s\S]*?\)/g, '');
+  }
+
+  // General Utilities
 
   splitText(text) {
     var paragraph     = "",

@@ -5,6 +5,7 @@ import { RegistrationComponent } from './pages/auth/registration/registration.co
 import { VerifyEmailComponent } from './pages/auth/verify-email/verify-email.component'
 import { ClubComponent } from './pages/club/club.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { AccountComponent } from './pages/auth/account/account.component';
 import { SessionComponent } from './pages/session/session.component';
 import { SidebarLayoutComponent } from './shared/layouts/sidebar-layout/sidebar-layout.component';
 
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'registration', component: RegistrationComponent },
   { path: 'verify-email', component: VerifyEmailComponent },
   { path: 'dashboard', component:  DashboardComponent },
+  { path: 'account', component:   AccountComponent },
   { 
     path: 'club/:id', 
     loadChildren: () => import('./pages/club/club.module').then(x => x.ClubModule)

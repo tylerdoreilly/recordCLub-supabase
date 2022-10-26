@@ -1,4 +1,15 @@
 .no-content{
     background:rgb(244, 245, 247);
-    padding:10px 0px;
+    padding:20px 0px;
+}
+
+::ng-deep .no-content-icon{
+
+    height:60px;
+    width:60px;
+}
+::ng-deep .no-content-icon .mat-icon{
+    font-size:60px;
+    height:60px;
+    width:60px;
 }

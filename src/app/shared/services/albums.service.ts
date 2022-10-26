@@ -205,11 +205,24 @@ export class AlbumsService {
     return this.http.get<Observable<any>>(`https://itunes.apple.com/lookup?id=${critiria}&entity=song&limit=100`);
   }
 
+  searchAlbums(critiria): Observable<any> {
+    return this.http.get<Observable<any>>(`https://itunes.apple.com/search?term=${critiria}&attribute=artistTerm&entity=album&limit=100`);
+  }
+
+  searchSongs(critiria): Observable<any> {
+    return this.http.get<Observable<any>>(`https://itunes.apple.com/search?term=${critiria}&attribute=artistTerm&entity=song&limit=100`);
+  }
+
+
   /////////////////////////////////////////////////
   // Get Last FM Data
 
   getLastFmData(artistName: string, albumName: string): Observable<any> {
     return this.http.get<Observable<any>>(`http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=${this._lastFmApiKey}&artist=${artistName}&album=${albumName}&format=json`)
+  };
+
+  getLastFmAlbumById(artistMBID?: string): Observable<any> {
+    return this.http.get<Observable<any>>(`http://ws.audioscrobbler.com/2.0/?method=album.getinfo&mbid=${artistMBID}&api_key=${this._lastFmApiKey}&format=json`)
   };
 
    /////////////////////////////////////////////////
@@ -226,8 +239,46 @@ export class AlbumsService {
     console.log(artistName);
     return this.http.get<any>(`https://www.theaudiodb.com/api/v1/json/523532/searchalbum.php?s=${artistName}&a=${albumName}`)
   };
-  
 
+  /////////////////////////////////////////////////
+  // Discogs
+
+  getDiscogsRelease(id:number): Observable<any>{
+    return this.http.get<any>(`https://api.discogs.com/masters/${id}`)
+  }
+  
+  getDiscogsReleaseVersions(id:number): Observable<any>{
+    return this.http.get<any>(`https://api.discogs.com/masters/${id}/versions`)
+  }
+
+
+  /////////////////////////////////////////////////
+  // Wiki Data
+
+  getWikiData(id):Observable<any>{
+    return this.http.get<Observable<any>>(`http://www.wikidata.org/w/api.php?action=wbgetentities&ids=${id}&format=json&origin=*`)
+  }
+
+   // WIKIPEDIA
+  getWikiAlbum(albumName: string): Observable<any>{ 
+    return this.http.get<any>(`https://en.wikipedia.org/w/api.php?action=parse&page=${albumName}&prop=text&formatversion=2&format=json&origin=*`)
+  }
+
+  getWikiSections(albumName: string): Observable<any>{ 
+    return this.http.get<any>(`https://en.wikipedia.org/w/api.php?action=parse&format=json&page=${albumName}&prop=sections&formatversion=2&origin=*`)
+  }
+
+  getWikiSection(albumName: string, sectionIndex): Observable<any>{ 
+    return this.http.get<any>(`https://en.wikipedia.org/w/api.php?action=parse&page=${albumName}&prop=text&section=${sectionIndex}&formatversion=2&format=json&origin=*`)
+  }
+
+  getWikiCredits(albumName: string): Observable<any>{ 
+    return this.http.get<any>(`https://en.wikipedia.org/w/api.php?action=parse&page=${albumName}&prop=text&section=18&formatversion=2&format=json&origin=*`)
+  }
+
+  getWikiTrackNotes(albumName: string): Observable<any>{ 
+    return this.http.get<any>(`https://en.wikipedia.org/w/api.php?action=parse&page=${albumName}&prop=text&section=17&formatversion=2&format=json&origin=*`)
+  }
 
  
 }

@@ -1,0 +1,28 @@
+// Imports
+@import 'colours';
+
+
+::ng-deep .album-content .mw-parser-output h2,
+::ng-deep .album-content .mw-parser-output h3{
+    display:none;
+}
+
+::ng-deep .album-content .mw-parser-output .multicol tbody tr td {
+    display:block;
+  }
+
+// custom style for inline links
+::ng-deep .album-content .mw-parser-output p a{
+    color:$primary-text;
+}
+
+// custom style for references section
+::ng-deep .album-content .mw-parser-output .mw-references-wrap{
+    background:$background-light;
+    padding:10px;
+    margin-top:25px;
+}
+
+::ng-deep .album-content .mw-parser-output .mw-references-wrap a{
+    color:$primary-text;
+}

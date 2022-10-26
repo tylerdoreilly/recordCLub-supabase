@@ -18,8 +18,8 @@
             <ng-template let-item #header>
                 <mat-list-item (click)="openDialog(item)">
                     <img mat-list-icon [src]='item.albumCover' class="icon-display">
-                    <div mat-line>{{item.album}}</div>
-                    <div mat-line>By: {{item.name}} </div>
+                    <div mat-line>{{item.title}}</div>
+                    <div mat-line>By: {{item.artist}} </div>
                     <div mat-line>Submitted By: {{item.submittedBy.displayName}}</div>
                 </mat-list-item>
                 <mat-divider></mat-divider>

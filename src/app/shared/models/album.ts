@@ -21,27 +21,34 @@ export class Album {
     scoreAverage?:number;
   }
 
-  export class Scores {
-    displayName: string;
-    memberId:string;
-    score:number;
-  }
+export class Scores {
+  displayName: string;
+  memberId:string;
+  score:number;
+}
 
-  export class GenreTags {
-    name: string;
-  }
+export class GenreTags {
+  name: string;
+}
 
-  export class Tracklist{
-    artistId:number;
-    kind:string;
-    trackId:number;
-    trackName: string; 
-    trackNumber: number;
-    trackPrice: number;
-    trackTimeMillis:number; 
-    trackViewUrl: string;
-    wrapperType: string;
-    previewUrl: string;
-    discCount: number; 
-    discNumber: number; 
-  }
+export class Tracklist{
+  artistId:number;
+  kind:string;
+  trackId:number;
+  trackName: string; 
+  trackNumber: number;
+  trackPrice: number;
+  trackTimeMillis:number; 
+  trackViewUrl: string;
+  wrapperType: string;
+  previewUrl: string;
+  discCount: number; 
+  discNumber: number; 
+}
+
+export class Vibe{
+  mood?:string;
+  speed?:string;
+  style?:string;
+  theme?:string;
+}

@@ -1,0 +1,25 @@
+<content-section>
+    <content-section-header title="Album Versions">
+    </content-section-header>
+    <mat-card>
+        <ng-container *ngIf="discogsVersions$ | async as versions; else noContent">
+            <items-list [items]="versions.versions">
+                <ng-template let-item #header>
+                    <mat-list-item>
+                        <!-- <mat-icon mat-list-icon>folder</mat-icon> -->
+                        <div mat-line>{{item.title}}</div>
+                        <div mat-line>{{item.format}} - {{item.country}}</div>
+                        <div mat-line>{{item.released}} - {{item.label}}</div> 
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                </ng-template>
+            </items-list>
+        </ng-container>
+       
+    </mat-card>    
+</content-section>
+
+
+<ng-template #noContent>
+    <no-content>Sorry no details are currently available.</no-content>
+</ng-template>

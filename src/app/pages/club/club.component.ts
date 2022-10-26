@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { AngularFireStorage } from '@angular/fire/compat//storage';
-import { Observable, forkJoin, combineLatest, of} from 'rxjs';
+import { Observable, forkJoin, combineLatest, of, from} from 'rxjs';
 import { switchMap, mergeMap, map, tap } from 'rxjs/operators';
 
 // Services
@@ -10,6 +10,7 @@ import { ClubsService } from '../../shared/services/clubs.service';
 import { SessionsService } from '../../shared/services/sessions.service';
 import { AlbumsService } from '../../shared/services/albums.service';
 import { MembersService } from '../../shared/services/members.service';
+import { SupabaseService } from "../../shared/services/supabase.service";
 
 // Models
 import { Club } from '../../shared/models/clubs';
@@ -26,11 +27,12 @@ export class ClubComponent implements OnInit {
 
   public clubId: any;
   public club$: Observable<Club>;
-  public members$: Observable<Member[]>;
+  public members$: Observable<any>;
 
   constructor(
     private _clubsService : ClubsService,
     private _membersService : MembersService,
+    private _supabaseService : SupabaseService,
     private actRoute: ActivatedRoute,
     private route: Router,
     public authService: AuthService,
@@ -39,6 +41,9 @@ export class ClubComponent implements OnInit {
 
   ngOnInit() {
    this.getData();
+   let testClub$ = from(this._supabaseService.clubs())
+   this.members$ = from(this._supabaseService.getSBMembers())
+   testClub$.subscribe(x=>{console.log('clubs test',x)})
   }
 
   getData(){

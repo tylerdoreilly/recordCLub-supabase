@@ -1,59 +1,69 @@
 <content-section>
     <content-section-header title="Album Picks">
         <ng-container actions>
-            <button mat-stroked-button class="btn-custom">Add Album</button>
+            <button mat-stroked-button class="btn-custom" (click)="addAlbum()">Add Album</button>
         </ng-container>
     </content-section-header>
 
     <mat-card>
-        <div class="table" fxLayout="column" >
-            <div class="table__header" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px">
-                <div class="table__col" fxFlex="60px">Album</div>
-                <div class="table__col" fxFlex></div>
-                <div class="table__col" fxFlex>Submitted By</div>
-                <div class="table__col" fxFlex>Average Score</div>
-                <div class="table__col" fxFlex="100px" [ngStyle]="{'margin-left':'auto'}">Actions</div>
-            </div>
-    
-        <div class="table__row" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px" *ngFor="let item of albums, index as i">
-            <div class="table__col" fxFlex="60px">
-                <img [src]='item.albumCover'>
-            </div>
-            <div class="table__col" fxFlex>
-                <div>{{item?.album}}</div> 
-                <div>By:{{item?.name}}</div>
-            </div>
-            <div class="table__col" fxFlex>
-                {{item?.submittedBy.displayName}}
-            </div>
-            <div class="table__col" fxFlex>
-                {{item?.scoreAverage}}
-            </div>
-            <div class="table__col" fxFlex="100px" [ngStyle]="{'margin-left':'auto'}">
-                <button mat-icon-button [matMenuTriggerFor]="menu" fxFlexAlign="end">
-                    Details
-                    <mat-icon>more_vert</mat-icon>
-                  </button>
-                  <mat-menu #menu="matMenu">
-                    <button mat-menu-item  (click)="openDialog(item, 0)">
-                      <span>Scores</span>
-                    </button>
-                    <button mat-menu-item  (click)="openDialog(item, 1)">
-                      <span>Tracklist</span>
-                    </button>
-                    <button mat-menu-item  (click)="openDialog(item, 2)">
-                      <span>Info</span>
-                    </button>
-                    <button mat-menu-item >
-                        <span>Album Page</span>
+        <ng-container *ngIf="albums.length else noContent">
+            <div class="table" fxLayout="column" >
+                <div class="table__header" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px">
+                    <div class="table__col" fxFlex="60px">Album</div>
+                    <div class="table__col" fxFlex></div>
+                    <div class="table__col" fxFlex>Submitted By</div>
+                    <div class="table__col" fxFlex>Average Score</div>
+                    <div class="table__col" fxFlex="100px" [ngStyle]="{'margin-left':'auto'}">Actions</div>
+                </div>
+        
+            <div class="table__row" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px" *ngFor="let item of albums, index as i">
+                <div class="table__col" fxFlex="60px">
+                    <img [src]='item.albumThumb' class="album-thumb">
+                </div>
+                <div class="table__col" fxFlex>
+                    <div>{{item?.title}}</div> 
+                    <div>By:{{item?.artist}}</div>
+                </div>
+                <div class="table__col" fxFlex>
+                    {{item?.submittedBy.displayName}}
+                </div>
+                <div class="table__col" fxFlex>
+                    {{item?.scoreAverage || "N/A"}}
+                </div>
+                <div class="table__col" fxFlex="100px" [ngStyle]="{'margin-left':'auto'}">
+                    <button mat-icon-button [matMenuTriggerFor]="menu" fxFlexAlign="end">
+                        Details
+                        <mat-icon>more_vert</mat-icon>
                       </button>
-                  </mat-menu>
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item  (click)="openDialog(item, 0)">
+                          <span>Scores</span>
+                        </button>
+                        <button mat-menu-item  (click)="openDialog(item, 1)">
+                          <span>Tracklist</span>
+                        </button>
+                        <button mat-menu-item  (click)="openDialog(item, 2)">
+                          <span>Info</span>
+                        </button>
+                        <button mat-menu-item [routerLink]="'/club/'+ 1 +'/session/' + item.sessionId + '/album/' + item.id">
+                            <span>Album Page</span>
+                          </button>
+                      </mat-menu>
+                </div>
             </div>
-        </div>
-        </div>
+            </div>
+        </ng-container>
+        
     </mat-card>
 </content-section>
 
 
 
 
+<ng-template #noContent>
+    <no-content>
+        <ng-container icon><mat-icon>album</mat-icon></ng-container>
+        <div class="message-text">No Songs have been added yet.</div> 
+        <div action><button mat-stroked-button class="btn-custom" (click)="addAlbum()">Add Album</button></div>
+    </no-content>
+</ng-template>

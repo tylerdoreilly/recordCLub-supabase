@@ -20,6 +20,7 @@ import { ClubsListComponent } from './shared/components/clubs-list/clubs-list.co
 
 import { SessionComponent } from './pages/session/session.component';
 import { ClubsNavComponent } from './shared/components/clubs-nav/clubs-nav.component';
+import { AccountComponent } from './pages/auth/account/account.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ClubsNavComponent } from './shared/components/clubs-nav/clubs-nav.compo
     DashboardComponent,
     SessionComponent,
     ClubsListComponent,
-   ClubsNavComponent
+   ClubsNavComponent,
+   AccountComponent
   ],
   imports: [
     SharedModule,

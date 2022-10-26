@@ -89,29 +89,6 @@ export class AlbumDetailsModalComponent implements OnInit {
     this._albumsService.lookupAlbum(this.data.album.collectionId).subscribe(results =>{
       this.albumDetails = results.results[0];    
       console.log('Album Details (Itunes)',this.albumDetails);
-
-     
-        //  const trackList = new Set(this.tracklist.map((x:any) => x));
-        // this.tracks = Array.from(trackList).map((x:any) => ({
-        //     artistId: x.artistId,
-        //     kind: x.kind,
-        //     trackId:x.trackId,
-        //     trackName: x.trackName, 
-        //     trackNumber:  x.trackNumber,
-        //     trackPrice: x.trackPrice,
-        //     trackTimeMillis:x.trackTimeMillis, 
-        //     trackViewUrl: x.trackViewUrl,
-        //     wrapperType: x.wrapperType,
-        //     previewUrl: x.previewUrl,
-        //     discCount: x. discCount,
-        //     discNumber: x.discNumber 
-        //   }));    
-
-        // const obj = {name: this.albumDetails.primaryGenreName};
-        // this.genreTags.push(obj)
-       
-      
-      
       console.log('genre tags', this.genreTags)
     })
     

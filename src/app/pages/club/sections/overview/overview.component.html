@@ -10,7 +10,7 @@
       <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="25px">
         <content-two-col>
             <ng-container main>
-              <sessions-list [sessions]="clubData.sessions"></sessions-list>
+              <sessions-list [sessions]="clubData.latestSession.data"></sessions-list>
               <albums-top-rated title="Top Rated Albums" [layout]="'list'" [items]="clubData.albumsOfWeek"></albums-top-rated> 
               <albums-of-week-list [items]="clubData.albumsOfWeek | slice :0:1"></albums-of-week-list>
             </ng-container>
@@ -28,7 +28,7 @@
         </content-two-col>
        
       </div>
-
+     
+      
   
 </ng-container>
-

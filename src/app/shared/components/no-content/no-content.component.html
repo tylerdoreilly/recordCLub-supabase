@@ -1,3 +1,7 @@
-<div class="no-content" fxLayout="row" fxLayoutAlign="center center">
-    <ng-content></ng-content>
+<div class="no-content" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px">
+    <div class="no-content-icon">
+        <ng-content select="[icon]"></ng-content>
+    </div>  
+     <ng-content></ng-content>
+    <ng-content [select]="action"></ng-content>
 </div>

@@ -1,0 +1,51 @@
+<content-section>
+
+    <content-section-header title="Album Media">
+    </content-section-header>
+
+    <mat-accordion class="example-headers-align" multi>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Album Artwork</mat-panel-title>
+        </mat-expansion-panel-header>
+          Artwork goes here
+  
+      </mat-expansion-panel>
+    
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Videos
+          </mat-panel-title>
+         
+        </mat-expansion-panel-header>
+        <ng-container *ngIf="albumVideos$ | async as videos">
+          <div fxLayout="row wrap" fxLayoutGap="32px grid" fxLayoutAlign="flex-start">
+            <div fxFlex="16.6%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let item of videos">
+               <mat-card>
+                <img mat-card-image [src]='item.videoId'>
+                <mat-card-title class="video-title">{{item.title | truncate}}</mat-card-title>
+                <mat-card-content>
+                  Description:
+                  <p>{{item.description | truncate:50}}</p>
+                  <a href="{{item.uri}}">watch</a>
+                </mat-card-content>
+           
+               </mat-card>
+            </div>
+          </div>
+        </ng-container>
+       
+      
+      </mat-expansion-panel>
+  
+    </mat-accordion>
+
+</content-section>
+
+
+
+
+  <ng-template #noContent>
+    <no-content>Sorry no details are currently available.</no-content>
+</ng-template>

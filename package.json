@@ -22,8 +22,10 @@
     "@angular/platform-browser": "^14.2.0",
     "@angular/platform-browser-dynamic": "^14.2.0",
     "@angular/router": "^14.2.0",
+    "@supabase/supabase-js": "^2.0.4",
     "firebase": "^9.11.0",
     "firebase-tools": "^11.14.1",
+    "ngx-material-timepicker": "^5.5.3",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

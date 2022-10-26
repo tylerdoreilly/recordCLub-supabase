@@ -1,0 +1,76 @@
+<section-header>
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a>Dashboard</a></li>
+        <li class="breadcrumb-item"><a>Club Micro</a></li>
+        <li class="breadcrumb-item"><a>Session</a></li>
+    </ul>
+    <h1>Album</h1>
+</section-header>
+
+<ng-container *ngIf="allAlbumData$ | async as albumData">
+    <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="25px">
+        <album-header 
+            [album]="albumData.album" 
+            [albumLength]="albumData.albumLength" 
+            [albumTags]="albumData.lastFmData.album.tags.tag"
+            [albumImgs]="albumData.lastFmData">
+        </album-header>
+      
+        <content-two-col>
+            <ng-container main>
+                <mat-tab-group animationDuration="0ms" dynamicHeight class="custom-tabs">
+                    <mat-tab label="Scores">
+                      <ng-container>
+                        <content-section>
+                            <content-section-header title="Album Scores">
+                            </content-section-header>
+                            <mat-card>
+                                <album-scores [albumScores]="albumScores"></album-scores>
+                            </mat-card>    
+                        </content-section>
+                      </ng-container>
+                    </mat-tab>
+                    
+                    <mat-tab label="Tracklist">
+                        <content-section>
+                            <content-section-header title="Album Tracklist">
+                            </content-section-header>
+                            <mat-card>
+                                <album-tracklist [tracklist]="albumData.albumTracklist"></album-tracklist>
+                            </mat-card>    
+                        </content-section>
+                    </mat-tab>
+              
+                    <mat-tab label="Details">
+                       <album-single-details 
+                            [links]="albumData?.albumLinks"
+                            [summary]="albumData.lastFmData">
+                        </album-single-details>
+                    </mat-tab>
+
+                    <mat-tab label="Media">
+                        <album-media 
+                            [links]="albumData.albumLinks">
+                         </album-media>
+                    </mat-tab>
+
+                    <mat-tab label="Versions">
+                        <album-versions [discogsId]="albumData.album.discogsId"></album-versions>
+                    </mat-tab>
+                </mat-tab-group>
+            </ng-container>
+
+            <ng-container sidebar>
+                <col-spacer [gap]="'25px'">
+                    <aside-block>
+                        <album-submitted-by [submittedBy]="albumData.album.submittedBy"></album-submitted-by>
+                    </aside-block>
+                    <aside-block>
+                       <album-vibe [vibe]="albumData.vibe"></album-vibe>
+                    </aside-block>
+                </col-spacer>
+            </ng-container>
+            
+        </content-two-col>
+    </div>
+</ng-container>

@@ -1,0 +1,101 @@
+<div mat-dialog-title>Add Album</div>
+  
+<mat-dialog-content>
+  <album-search [parentForm]="albumForm" (loading)="loading = $event" (results)="updateResults($event)"></album-search>
+
+  <ng-container *ngIf="results.length && albumSelected == false">
+    <album-results [results]="results" (albumDetails)="addAlbum($event)"></album-results>
+  </ng-container>
+
+  <ng-container *ngIf="albumSelected == true">
+    <div>
+      <h3>Selected Album:</h3>
+      <mat-card class="selected-album">
+
+          <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="15px">
+            <div>
+              <img class="album-thumb" [src]='albumSelection.artworkUrl60'>
+            </div>
+            <div>
+              <div>{{albumSelection.collectionName}}</div>
+              <div>{{albumSelection.artistName}} </div>
+              <div>{{albumSelection.releaseDate | date:'y'}} - {{albumSelection.trackCount}} songs, , {{albumSelectedLength}}</div>
+            </div>
+            <div fxFlex></div>
+            <button align="end" mat-stroked-button (click)="removeAlbum(albumSelection, $event)">Remove</button>
+          </div>
+
+        <mat-card-content>
+          <mat-tab-group animationDuration="0ms" dynamicHeight>
+            <mat-tab label="Tracklist">
+              <album-tracklist [tracklist]="albumSelectionTracklist"></album-tracklist>
+            </mat-tab>
+            
+            <mat-tab label="MetaData">
+              <h4>Metadata Sources</h4> 
+              <mat-accordion class="example-headers-align" multi>
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      itunes
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      <ng-container *ngIf="metaDataSources.itunes == true else notAvailable">
+                        <span class="meta-source">Source Available</span><mat-icon>done</mat-icon>  
+                      </ng-container> 
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+                  <p>The itunes API is used to search for and store base level album information for our APP.</p>  
+                  <p>Apple, Sportify and Youtube all use the AMG databse, the most robust and complete music dataset available.<br> 
+                    This API is not open source, however we can leverage the aformentioned services to the same benefit.</p>
+                </mat-expansion-panel>
+              
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      LastFm
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      <ng-container *ngIf="metaDataSources.lastFm == true else notAvailable">
+                        <span class="meta-source">Source Available</span> <mat-icon>done</mat-icon>  
+                      </ng-container> 
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+                  <p>LastFm is one of the largest open source music APIs.</p> 
+                  <p>We leverage this for additional media and query ids for other sources.</p>
+                </mat-expansion-panel>
+
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      AudioDB
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      <ng-container *ngIf="metaDataSources.audioDb == true else notAvailable">
+                        <span class="meta-source">Source Available</span> <mat-icon>done</mat-icon>  
+                      </ng-container> 
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+                  <p>Audio DB is a growing music dataset/API </p> 
+                  <p>This API provides a lot of external links and media we use for our album information. </p>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </mat-tab>
+          </mat-tab-group>
+        </mat-card-content>
+        
+      </mat-card>
+    </div>
+  </ng-container>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Save</button>
+</mat-dialog-actions>
+
+
+<!-- Templates -->
+<ng-template #notAvailable>
+  <mat-icon>clear</mat-icon> Source Not Available
+</ng-template>

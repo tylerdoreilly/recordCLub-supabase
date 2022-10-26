@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AlbumDetailsModalComponent } from '../../../albums/components/album-details-modal/album-details-modal.component';
+import { AlbumAddComponent } from '../../../album-add/album-add.component';
 
 @Component({
   selector: 'session-albums',
@@ -30,6 +31,16 @@ export class SessionAlbumsComponent implements OnInit {
         album: value,
         activeTab: tab
       },
+    });
+  }
+
+  addAlbum() {
+    this.dialog.open(AlbumAddComponent, {
+      width: '40vw', 
+      // height:'70vh',
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      disableClose: true,
     });
   }
 
