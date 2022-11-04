@@ -51,7 +51,7 @@ export class AlbumsListComponent implements OnInit {
   }
 
   getData(): void {
-    this.albums$ = this._albumService.getAllAlbumsStore();
+    // this.albums$ = this._albumService.getAllAlbumsStore();
     this.sessions$ = this._sessionsService.getSessions(this.clubId);
     this.filteredAlbums$ = this.albums$;
     this.setupFilters();  
@@ -125,7 +125,7 @@ export class AlbumsListComponent implements OnInit {
       else{
         const filterTerm: string = x.displayName;
         console.log('artist filter', filterTerm)
-        this.filteredAlbums$ = this._albumService.getAlbumsArtist(filterTerm)
+        // this.filteredAlbums$ = this._albumService.getAlbumsArtist(filterTerm)
       }
      
     })
@@ -137,7 +137,7 @@ export class AlbumsListComponent implements OnInit {
       else{
         const filterTerm: string = x.displayName;
         console.log('artist filter', filterTerm)
-        this.filteredAlbums$ = this._albumService.getAlbumsArtist(filterTerm)
+        // this.filteredAlbums$ = this._albumService.getAlbumsArtist(filterTerm)
       }
      
     })
@@ -147,7 +147,7 @@ export class AlbumsListComponent implements OnInit {
    
     let artist:string = value[0].displayName;
     console.log(artist)
-    this._albumService.getAlbumsArtist(artist).subscribe(x=>console.log('filter test',x))
+    // this._albumService.getAlbumsArtist(artist).subscribe(x=>console.log('filter test',x))
   }
 
 

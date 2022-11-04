@@ -1,9 +1,11 @@
 import { Component, ViewChild, EventEmitter, Output, OnInit, Input, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder } from "@angular/forms";
-import { AlbumsService } from '../../../../../shared/services/albums.service';
 import { fromEvent } from 'rxjs';
 import { map, filter, debounceTime, tap, switchAll,switchMap, finalize } from 'rxjs/operators';
+
+//services
+import { AlbumsService } from '../../../../../shared/services/albums.service';
 
 @Component({
   selector: 'album-search',
@@ -14,12 +16,12 @@ export class AlbumSearchComponent implements OnInit {
   @Output() loading = new EventEmitter();
   @Output() results = new EventEmitter();
   @Input() parentForm: FormGroup;
-  public blah;
 
-  searchMoviesCtrl = new FormControl();
-  filteredMovies: any;
-  isLoading = false;
-  errorMsg: string;
+  public searchMoviesCtrl = new FormControl();
+  public filteredMovies: any;
+  public isLoading = false;
+  public errorMsg: string;
+
   constructor(
     private _albumsService: AlbumsService,
     public fb: FormBuilder,
@@ -83,7 +85,7 @@ export class AlbumSearchComponent implements OnInit {
   /// Filter Controls
 
   resetFilter(){
-    this.parentForm.get('album').setValue('');
+    this.parentForm.get('artist').setValue('');
     this.results.emit('');
    }
 

@@ -6,7 +6,10 @@
   </div>
   <div class="app-brand">Record Club</div>
   <div fxFlex></div>
-  <user-menu></user-menu>
+  <ng-container *ngIf="isAuthenticated()">
+    <user-menu></user-menu>
+  </ng-container>
+ 
 </div>
 <router-outlet></router-outlet>
 

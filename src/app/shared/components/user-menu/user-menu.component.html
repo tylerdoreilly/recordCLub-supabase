@@ -1,6 +1,6 @@
-<ng-container *ngIf="authService.user$ | async as user">
+<ng-container>
     <button mat-button [matMenuTriggerFor]="userMenu">
-        {{user.displayName}}
+        {{displayName}}
         <mat-icon>arrow_drop_down</mat-icon>
     </button>
 </ng-container>
@@ -16,4 +16,4 @@
         <mat-icon>exit_to_app</mat-icon>
         <span>Logout</span>
     </button>
-  </mat-menu>
+</mat-menu>

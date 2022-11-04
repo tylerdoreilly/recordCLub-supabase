@@ -3,11 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './pages/auth/login/login.component'
 import { RegistrationComponent } from './pages/auth/registration/registration.component'
 import { VerifyEmailComponent } from './pages/auth/verify-email/verify-email.component'
-import { ClubComponent } from './pages/club/club.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { AccountComponent } from './pages/auth/account/account.component';
-import { SessionComponent } from './pages/session/session.component';
-import { SidebarLayoutComponent } from './shared/layouts/sidebar-layout/sidebar-layout.component';
+
 
 const routes: Routes = [
   {
@@ -18,8 +14,10 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registration', component: RegistrationComponent },
   { path: 'verify-email', component: VerifyEmailComponent },
-  { path: 'dashboard', component:  DashboardComponent },
-  { path: 'account', component:   AccountComponent },
+  { 
+    path: 'dashboard',
+    loadChildren: () => import('./pages/dashboard/dashboard.module').then(x => x.DashboardModule)
+   },
   { 
     path: 'club/:id', 
     loadChildren: () => import('./pages/club/club.module').then(x => x.ClubModule)

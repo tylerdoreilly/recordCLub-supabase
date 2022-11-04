@@ -52,19 +52,13 @@ export class OverviewComponent implements OnInit {
   }
 
   getData():void{
-    this.club$ = this._clubsService.getClub(this.id);
-    this.sessions$ = this._sessionsService.getLatestSession(this.id);
     this.sbLatestSession$ = from(this._supabaseService.getSBUpcomingSession())
-    this.albumsOfWeek$ = this._albumService.getAlbumsOfWeek();
-    this.albumFeatured$ = this._albumService.getRandomAlbum();
+    // this.albumsOfWeek$ = this._albumService.getAlbumsOfWeek();
+    // this.albumFeatured$ = this._albumService.getRandomAlbum();
 
-    this.clubData$ = combineLatest([this.club$, this.sessions$, this.albumsOfWeek$, this.albumFeatured$, this.sbLatestSession$])
+    this.clubData$ = combineLatest([this.sbLatestSession$])
     .pipe(
-      map(([club, sessions, albumsOfWeek, randomAlbum, latestSession]) => ({
-        club,
-        sessions,
-        albumsOfWeek,
-        randomAlbum,
+      map(([latestSession]) => ({
         latestSession
       }))
     )

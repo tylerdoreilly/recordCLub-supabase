@@ -1,6 +1,17 @@
-<p>dashboard works!</p>
+<div class="container" fxLayout="row" fxLayoutAlign="start start">
+ 
+    <div class="nav-sidebar" fxFlex="250px">
+      <nav-header></nav-header>
+      <dashboard-menu></dashboard-menu>
+    </div>
+    
+    <div class="main-content" fxFlex  style="overflow-y:auto">
+      <router-outlet></router-outlet>
+    </div>
+   
+  </div>
 
-<ng-container *ngIf="clubs$ | async as clubs">
+<!-- <ng-container *ngIf="clubs$ | async as clubs">
     <clubs-list [clubs]="clubs"></clubs-list>
-</ng-container>
+</ng-container> -->
 

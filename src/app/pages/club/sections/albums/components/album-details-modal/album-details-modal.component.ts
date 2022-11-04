@@ -140,9 +140,9 @@ export class AlbumDetailsModalComponent implements OnInit {
     // this.fillDataForm.get('copyright').patchValue(this.albumDetails.copyright);
     // this.fillDataForm.get('trackList').patchValue(this.tracks);
     const value = this.fillDataForm.value;
-    this._albumsService.getAlbum(this.clubId, this.sessionId, this.albumId).subscribe(x=>{
-      this._albumsService.updateData(this.albumId, value);
-    })
+    // this._albumsService.getAlbum(this.clubId, this.sessionId, this.albumId).subscribe(x=>{
+    //   this._albumsService.updateData(this.albumId, value);
+    // })
     
   }
  

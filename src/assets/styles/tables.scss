@@ -7,10 +7,17 @@
     padding-bottom:5px;
 }
 
+.table--sm .table__header{
+    margin-bottom:5px;
+}
+
 .table__row{
     border-bottom:1px solid $light-grey;
-    background:#fff;
-    
+    background:#fff;   
+}
+
+.table__row.table--noline{
+    border-bottom:0px;
 }
 
 .table__col{
@@ -19,4 +26,8 @@
 
 .table__header .table__col{
     padding:0px 0px 5px 0px
+}
+
+.average-score{
+    font-weight:bold;
 }

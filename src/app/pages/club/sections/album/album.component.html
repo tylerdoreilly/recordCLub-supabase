@@ -11,9 +11,7 @@
     <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="25px">
         <album-header 
             [album]="albumData.album" 
-            [albumLength]="albumData.albumLength" 
-            [albumTags]="albumData.lastFmData.album.tags.tag"
-            [albumImgs]="albumData.lastFmData">
+            [albumTags]="albumData.lastFmData.album.tags.tag">
         </album-header>
       
         <content-two-col>
@@ -23,9 +21,12 @@
                       <ng-container>
                         <content-section>
                             <content-section-header title="Album Scores">
+                                <ng-container actions>
+                                    <button mat-stroked-button class="btn-custom" (click)="addScores()">Add Scores</button>
+                                </ng-container>
                             </content-section-header>
                             <mat-card>
-                                <album-scores [albumScores]="albumScores"></album-scores>
+                                <album-scores [albumId]="albumData.album.id"></album-scores>
                             </mat-card>    
                         </content-section>
                       </ng-container>

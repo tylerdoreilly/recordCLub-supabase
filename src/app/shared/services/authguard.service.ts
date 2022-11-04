@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { AngularFireAuth } from "@angular/fire/compat/auth";
+import { SupabaseService } from './supabase.service'
+
 import { Observable } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 
@@ -10,7 +12,9 @@ import { map, take, tap } from 'rxjs/operators';
 export class AuthguardService implements CanActivate {
 
   constructor(
-    private afAuth: AngularFireAuth, private router: Router
+    private afAuth: AngularFireAuth, 
+    private readonly _supabaseService: SupabaseService,
+    private router: Router
   ) { }
 
   canActivate(
@@ -30,6 +34,5 @@ export class AuthguardService implements CanActivate {
           }
         })
       )
-      
-   }
+  }
 }

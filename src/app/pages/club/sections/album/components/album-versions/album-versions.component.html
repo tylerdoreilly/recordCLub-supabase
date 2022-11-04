@@ -6,7 +6,7 @@
             <items-list [items]="versions.versions">
                 <ng-template let-item #header>
                     <mat-list-item>
-                        <!-- <mat-icon mat-list-icon>folder</mat-icon> -->
+                        <img mat-list-icon [src]='item.thumb' class="list-img">
                         <div mat-line>{{item.title}}</div>
                         <div mat-line>{{item.format}} - {{item.country}}</div>
                         <div mat-line>{{item.released}} - {{item.label}}</div> 

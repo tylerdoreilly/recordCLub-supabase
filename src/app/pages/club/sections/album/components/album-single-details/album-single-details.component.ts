@@ -20,6 +20,7 @@ export class AlbumSingleDetailsComponent implements OnInit {
   public wikipediaCredits$: Observable<any>
   public wikiBackground$: Observable<any>
   public wikiRecording$: Observable<any>
+  public wikiData$: Observable<any>
 
   constructor(
     private _albumsService: AlbumsService,
@@ -37,17 +38,36 @@ export class AlbumSingleDetailsComponent implements OnInit {
 
   getData(){
 
+    this.wikiData$ = this._albumsService.getWikiSections(this.links.strWikipediaID)
+    .pipe(
+      switchMap((sections:any)=>{
+        const sectionsList = sections.parse.sections;
+        this.wikipediaCredits$ = this.parseWikiSection(sectionsList, 'Personnel', this.links.strWikipediaID );
+        this.wikiBackground$ = this.parseWikiSection(sectionsList, 'Background', this.links.strWikipediaID );
+        this.wikiRecording$ = this.parseWikiSection(sectionsList, 'Recording', this.links.strWikipediaID );
+
+        const data = combineLatest([ this.wikipediaCredits$, this.wikiBackground$, this.wikiRecording$])
+        .pipe(
+          map(([credits, background, recording]) => ({
+            credits: credits ? credits.parse.text : '', 
+            background: background ? background.parse.text : '',
+            recording: recording ? recording.parse.text : '',
+          }))
+        )
+        return data
+      }),
+    )
+
+    this.wikiData$.subscribe(x=>console.log('test sections',x))
+
     this.wikipediaCredits$ = this._albumsService.getWikiSections(this.links.strWikipediaID)
     .pipe(
       switchMap((sections:any)=>{
         const sectionsList = sections.parse.sections;
-        const selectedSections = sectionsList.filter(sectionsList => sectionsList.line == 'Personnel')
-        const section = selectedSections[0].index;
-        const personnel = this._albumsService.getWikiSection(this.links.strWikipediaID, section)
-        return personnel
+        return this.parseWikiSection(sectionsList, 'Personnel', this.links.strWikipediaID );
       }),
       map((credits:any)=>{
-        return credits.parse.text
+        return credits ? credits.parse.text : of(null)
       })
     )
 
@@ -56,13 +76,10 @@ export class AlbumSingleDetailsComponent implements OnInit {
       tap(x =>console.log('sections',x)),
       switchMap((sections:any)=>{
         const sectionsList = sections.parse.sections;
-        const selectedSections = sectionsList.filter(sectionsList => sectionsList.line == 'Background')
-        const section = selectedSections[0].index;
-        const personnel = this._albumsService.getWikiSection(this.links.strWikipediaID, section)
-        return personnel
+        return this.parseWikiSection(sectionsList, 'Background', this.links.strWikipediaID );
       }),
       map((background:any)=>{
-        return background.parse.text
+        return background ? background.parse.text : of(null)
       })
     )
 
@@ -70,17 +87,19 @@ export class AlbumSingleDetailsComponent implements OnInit {
     .pipe(
       tap(x =>console.log('sections',x)),
       switchMap((sections:any)=>{
-        const sectionsList = sections.parse.sections;
-        const selectedSections = sectionsList.filter(sectionsList => sectionsList.line == 'Recording')
-        const section = selectedSections[0].index;
-        const personnel = this._albumsService.getWikiSection(this.links.strWikipediaID, section)
-        return personnel
+        const sectionsList = sections.parse.sections;     
+        return  this.parseWikiSection(sectionsList, 'Recording', this.links.strWikipediaID );
       }),
       map((recording:any)=>{
-        return recording.parse.text
+        return recording ? recording.parse.text : of(null)
       })
     )
 
   }
 
+  parseWikiSection(sectionsList, sectionType, wikiId){
+    const selectedSections = sectionsList.filter(sectionsList => sectionsList.line == sectionType);
+    const section = selectedSections.length ? selectedSections[0].index : null;
+    return section ? this._albumsService.getWikiSection(wikiId, section) : of(null)
+  }
 }

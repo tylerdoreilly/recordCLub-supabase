@@ -1,0 +1,33 @@
+<section-header>
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a>Record Club</a></li>
+    </ul>
+    <h1>Profile</h1>
+</section-header>
+
+
+<form [formGroup]="updateProfileForm" (ngSubmit)="update()" class="form-widget">
+  <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="15px" >
+    <mat-form-field class="example-full-width" appearance="fill" fxFlexFill>
+      <mat-label>Email</mat-label>
+      <input matInput placeholder="Email" formControlName="email" type="text">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width" appearance="fill" fxFlexFill>
+      <mat-label>Display Name</mat-label>
+      <input matInput placeholder="Display Name" formControlName="username" type="text">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width" appearance="fill" fxFlexFill>
+      <mat-label>Avatar</mat-label>
+      <input matInput placeholder="Avatar" formControlName="avatar_url" type="text">
+    </mat-form-field>
+  </div>
+
+  <div>
+    <button type="submit" class="button primary block" [disabled]="loading">
+      {{ loading ? 'Loading ...' : 'Update' }}
+    </button>
+  </div>
+</form>
+

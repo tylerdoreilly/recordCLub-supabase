@@ -1,0 +1,10 @@
+<section-header>
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a>Record Club</a></li>
+    </ul>
+    <h1>Dashboard</h1>
+</section-header>
+
+<ng-container *ngIf="myClubs$ | async as clubs">
+    <clubs-list [clubs]="clubs"></clubs-list>
+</ng-container>

@@ -1,14 +1,13 @@
 <div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="15px" class="album-modal-header">
     <div fxFlex="180px" fxLayoutAlign="start">
       <album-cover
-        [lgCover]="albumCover"
-        [defaultCover]="album.albumThumb">
+        [lgCover]="album?.albumThumb_lg"
+        [defaultCover]="album?.albumThumb">
       </album-cover>
-      <!-- <img [src]='albumCover'> -->
     </div>
     <div>
       <h1 class="album-title">{{album.title}}</h1>
-      <h2>{{album.artist}} - {{album.releaseDate | date:'y'}} - {{album.trackCount}} songs, {{albumLength}}</h2>
+      <h2>{{album.artist}} - {{album.releaseDate | date:'y'}} - {{album.trackCount}} songs, {{album.albumLength}}</h2>
       <album-tags *ngIf="albumTags" [tags]="albumTags"></album-tags>
       <album-tags *ngIf="!albumTags" [itunesGenre]="album.primaryGenre"></album-tags> 
     </div>

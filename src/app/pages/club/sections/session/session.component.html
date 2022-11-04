@@ -10,7 +10,7 @@
         <session-details *ngIf="sessionData" [sessionData]="sessionData.session[0]"></session-details>
         <content-two-col>
             <ng-container main>
-                <session-albums [albums]="sessionData.albums"></session-albums>
+                <session-albums [albums]="sessionData.albums" [session]="sessionData.session[0]"></session-albums>
                 <session-songs [songs]="sessionData.songs" (someEvent)="someFunction($event)"></session-songs>
             </ng-container>
             <ng-container sidebar>

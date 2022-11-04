@@ -38,6 +38,7 @@ import { AlbumMediaComponent } from './sections/album/components/album-media/alb
 import { AlbumVersionsComponent } from './sections/album/components/album-versions/album-versions.component';
 import { AlbumCoverComponent } from './sections/album/components/album-cover/album-cover.component';
 import { AlbumSubmittedBYComponent } from './sections/album/components/album-submitted-by/album-submitted-by.component';
+import { ScoresAddComponent } from './sections/album/components/scores-add/scores-add.component';
 
 
 @NgModule({
@@ -68,6 +69,7 @@ import { AlbumSubmittedBYComponent } from './sections/album/components/album-sub
     AlbumVersionsComponent,
     AlbumCoverComponent,
     AlbumSubmittedBYComponent,
+    ScoresAddComponent,
 
   ],
   exports:[

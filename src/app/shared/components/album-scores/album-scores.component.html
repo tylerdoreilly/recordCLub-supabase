@@ -1,25 +1,26 @@
-<ng-container *ngIf="albumScores; else noContent">
-  <div class="table" fxLayout="column" >
+<ng-container *ngIf="scores$ | async as scores; else noContent">
+  <div class="table table--sm" fxLayout="column" >
     <div class="table__header" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px">
       <div class="table__col" fxFlex="20px">#</div>
       <div class="table__col" fxFlex>Reviewer</div>
-      <div class="table__col" fxFlex>Score</div>
+      <div class="table__col" fxFlex="100px" [ngStyle]="{'margin-left':'auto'}">Score</div>
     </div>
-    <div class="table__row" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px" *ngFor="let item of albumScores; let i = index">
-      <div class="table__col" fxFlex="20px">{{i + 1}}</div>
-      <div class="table__col" fxFlex>
-        {{item?.displayName}} 
-        <span class="album-submitter" *ngIf="item?.submittedBy">({{item?.submittedBy}})</span>
+    <ng-container *ngIf="scores.length else noContent">
+      <div class="table__row" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px" *ngFor="let item of scores; let i = index">
+        <div class="table__col" fxFlex="20px">{{i + 1}}</div>
+        <div class="table__col" fxFlex>
+          {{item?.displayName}} 
+          <!-- <span class="album-submitter" *ngIf="item?.submittedBy">({{item?.submittedBy}})</span> -->
+        </div>
+        <div class="table__col" fxFlex="100px" [ngStyle]="{'margin-left':'auto'}">{{item?.score}} </div>
       </div>
-      <div class="table__col" fxFlex>
-        {{item?.score}} 
+      <div class="table__row table--noline" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+        <div class="table__col" fxFlex="20px"> </div>
+        <div class="table__col" fxFlex><span class="average-score">Average Score</span></div>
+        <div class="table__col" fxFlex="100px" [ngStyle]="{'margin-left':'auto'}"><span class="average-score">{{averageScore || "N/A"}}</span></div>
       </div>
-    </div>
-    <div class="table__row" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
-      <div class="table__col" fxFlex="20px"> </div>
-      <div class="table__col" fxFlex><span class="average-score">Average Score</span></div>
-      <div class="table__col" fxFlex><span class="average-score">{{average}}</span></div>
-    </div>
+    </ng-container>
+   
   </div>
 </ng-container>
 

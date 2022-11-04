@@ -18,19 +18,56 @@ import { SessionNew } from '../models/session'
 export class SupabaseService {
   private supabase: SupabaseClient
   public _session: AuthSession | null = null
+  public _user:User
   
   constructor() {
     this.supabase = createClient(
       environment.supabaseUrl,
       environment.supabaseKey
     )
-   }
+  }
 
   get session() {
     this.supabase.auth.getSession().then(({ data }) => {
       this._session = data.session
     })
     return this._session
+  }
+
+  public getUser(): User|null {
+    this.supabase.auth.getUser().then(({ data }) => {
+      this._user = data.user
+    })
+    return this._user
+  }
+
+  public getSession(): Session|null {
+    this.supabase.auth.getSession().then(({ data }) => {
+      this._session = data.session
+    })
+    return this._session
+  }
+
+  async getProfile(userId){
+    // const user = this.getUser();
+    // const { data: { user } } = await this.supabase.auth.getUser()
+    return this.supabase.from('profiles')
+    .select('username, avatar_url')
+    .eq('id', userId)
+    .single();
+  }
+
+  public updateProfile(userUpdate): any {
+    const user = this.getUser();
+
+    const update = {
+      username: userUpdate.username,
+      avatar_url: userUpdate.avatar_url,
+      id: user?.id,
+      updated_at: new Date(),
+    };
+
+    return this.supabase.from('profiles').upsert(update)
   }
 
   profile(user: User) {
@@ -41,9 +78,7 @@ export class SupabaseService {
       .single()
   }
 
-  authChanges(
-    callback: (event: AuthChangeEvent, session: Session | null) => void
-  ) {
+  authChanges(callback: (event: AuthChangeEvent, session: Session | null) => void) {
     return this.supabase.auth.onAuthStateChange(callback)
   }
 
@@ -51,18 +86,33 @@ export class SupabaseService {
     return this.supabase.auth.signInWithOtp({ email })
   }
 
+  async signInWithEmail(email, password) {
+    const { data, error } = await this.supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    })
+  }
+
+  async signUp(email, password){
+    const { data, error } = await this.supabase.auth.signUp({
+      email: email,
+      password: password,
+    })
+  }
+  
+
   signOut() {
     return this.supabase.auth.signOut()
   }
 
-  updateProfile(profile: Profile) {
-    const update = {
-      ...profile,
-      updated_at: new Date(),
-    }
+  // updateProfile(profile: Profile) {
+  //   const update = {
+  //     ...profile,
+  //     updated_at: new Date(),
+  //   }
 
-    return this.supabase.from('profiles').upsert(update)
-  }
+  //   return this.supabase.from('profiles').upsert(update)
+  // }
 
   downLoadImage(path: string) {
     return this.supabase.storage.from('avatars').download(path)
@@ -144,6 +194,41 @@ export class SupabaseService {
 
   return album.data[0] || [];
  }
+
+ async createAlbum(data){
+  const { error } = await this.supabase
+    .from('albums')
+    .insert(data)
+ }
+
+ async updateAlbumAvgScore(avgScore, albumId){
+  const { error } = await this.supabase
+  .from('albums')
+  .update({ averageScore: avgScore })
+  .eq('id', albumId)
+ }
+
+ // Scores
+ async getAlbumScores(value){
+  const scores = await this.supabase
+  .from('scores')
+  .select('*')
+  .eq('albumId', value)
+
+  return scores.data || [];
+ }
+
+ async addScores(scores, avgScore, albumId){
+  const { error } = await this.supabase
+  .from('scores')
+  .insert(scores)
+
+  const { } = await this.supabase
+  .from('albums')
+  .update({ averageScore: avgScore })
+  .eq('id', albumId)
+ }
+ 
 
   // Members
   getSBMembers(){

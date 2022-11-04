@@ -40,9 +40,16 @@ export class ClubComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-   this.getData();
+  //  this.getData();
    let testClub$ = from(this._supabaseService.clubs())
    this.members$ = from(this._supabaseService.getSBMembers())
+   .pipe(
+    map((members:any) =>{
+      this._membersService.setMembers(members);
+      return members
+    })
+   )
+
    testClub$.subscribe(x=>{console.log('clubs test',x)})
   }
 

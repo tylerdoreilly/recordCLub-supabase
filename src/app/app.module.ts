@@ -9,7 +9,7 @@ import { RouterModule, Routes, Router, ActivatedRoute, NavigationEnd } from '@an
 import { AuthguardService } from "./shared/services/authguard.service";
 
 
-
+import { DashboardMenuComponent } from './pages/dashboard/components/dashboard-menu/dashboard-menu.component';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { RegistrationComponent } from './pages/auth/registration/registration.component';
 import { VerifyEmailComponent } from './pages/auth/verify-email/verify-email.component';
@@ -31,9 +31,10 @@ import { AccountComponent } from './pages/auth/account/account.component';
     ClubComponent,
     DashboardComponent,
     SessionComponent,
-    ClubsListComponent,
+    // ClubsListComponent,
    ClubsNavComponent,
-   AccountComponent
+   AccountComponent,
+   DashboardMenuComponent
   ],
   imports: [
     SharedModule,

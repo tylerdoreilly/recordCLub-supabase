@@ -3,12 +3,12 @@
     <div class="table__header" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px">
       <div class="table__col" fxFlex="20px">#</div>
       <div class="table__col" fxFlex>Title</div>
-      <div class="table__col" fxFlex>Length</div>
+      <div class="table__col" fxFlex="100px" [ngStyle]="{'margin-left':'auto'}">Length</div>
     </div>
     <div class="table__row" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px" *ngFor="let track of tracklist; let i = index">
       <div class="table__col" fxFlex="20px">{{track?.trackNumber}}</div>
       <div class="table__col" fxFlex>{{track?.trackName}}</div>
-      <div class="table__col" fxFlex>{{track?.trackTimeMillis | date: 'mm:ss'}} </div>
+      <div class="table__col" fxFlex="100px" [ngStyle]="{'margin-left':'auto'}">{{track?.trackTimeMillis | date: 'mm:ss'}} </div>
     </div>
   </div>
 </ng-container>

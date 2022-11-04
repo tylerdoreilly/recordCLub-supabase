@@ -1,0 +1,36 @@
+<div mat-dialog-title>Add Scores</div>
+<mat-dialog-content>
+    <form [formGroup]="scoresForm" (ngSubmit)="onSubmit()">
+
+        <div class="table" fxLayout="column" formArrayName="scores">
+            <div class="table__header" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px">
+              <div class="table__col" fxFlex="20px">#</div>
+              <div class="table__col" fxFlex>Reviewer</div>
+              <div class="table__col" fxFlex>Score</div>
+            </div>
+            <ng-container *ngFor="let score of scores.controls; let i=index">
+                <div class="table__row" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px" [formGroupName]="i">
+                    <div class="table__col" fxFlex="20px">{{i + 1}}</div>
+                    <div class="table__col" fxFlex>{{score.value.displayName}}</div>
+                    <div class="table__col" fxFlex>
+                        <input type="number" formControlName="score">
+                    </div>
+                </div>
+                
+            </ng-container>
+            <div class="table__row" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+                <div class="table__col" fxFlex="20px"> </div>
+                <div class="table__col" fxFlex><span class="average-score">Average Score</span></div>
+                <div class="table__col" fxFlex><span class="average-score">{{averageScore || "N/A"}}</span></div>
+            </div>
+        </div>
+
+       
+      </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="addScores()">Save</button>
+  </mat-dialog-actions>
+

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { 
   AngularFirestore,
@@ -25,54 +26,65 @@ export class MembersService {
   public groups$: Observable<Group[]>;
   public users$: Observable<User[]>;
 
+  private _members = new BehaviorSubject<any>(null);
+  public members = this._members.asObservable();
+
   constructor(
     private afs: AngularFirestore
   ) { }
 
-  getMembers(clubId): Observable<Member[]> {
+  // getMembers(clubId): Observable<Member[]> {
 
-    this.membersCollection = this.afs.collection<Member>('clubs/'+ clubId + '/members');
+  //   this.membersCollection = this.afs.collection<Member>('clubs/'+ clubId + '/members');
 
-      this.members$= this.membersCollection.snapshotChanges().pipe(
-        map(actions => {
-          return actions.map(a => {
-            const data = a.payload.doc.data();
-            const id = a.payload.doc.id;
-            return { id, ...data };
-          });
-        })
-      );
-    return this.members$;
+  //     this.members$= this.membersCollection.snapshotChanges().pipe(
+  //       map(actions => {
+  //         return actions.map(a => {
+  //           const data = a.payload.doc.data();
+  //           const id = a.payload.doc.id;
+  //           return { id, ...data };
+  //         });
+  //       })
+  //     );
+  //   return this.members$;
+  // }
+
+  // getGroups(clubId): Observable<Group[]> {
+
+  //   this.groupsCollection = this.afs.collection<Group>('clubs/'+ clubId + '/groups');
+
+  //     this.groups$= this.groupsCollection.snapshotChanges().pipe(
+  //       map(actions => {
+  //         return actions.map(a => {
+  //           const data = a.payload.doc.data();
+  //           const id = a.payload.doc.id;
+  //           return { id, ...data };
+  //         });
+  //       })
+  //     );
+  //   return this.groups$;
+  // }
+
+  // getUsers(): Observable<User[]> {
+  //   this.usersCollection = this.afs.collection<User>('users');
+
+  //     this.users$= this.usersCollection.snapshotChanges().pipe(
+  //       map(actions => {
+  //         return actions.map(a => {
+  //           const data = a.payload.doc.data();
+  //           const id = a.payload.doc.id;
+  //           return { id, ...data };
+  //         });
+  //       })
+  //     );
+  //   return this.users$;
+  // }
+
+  setMembers(value:any){
+    this._members.next(value);
   }
 
-  getGroups(clubId): Observable<Group[]> {
-
-    this.groupsCollection = this.afs.collection<Group>('clubs/'+ clubId + '/groups');
-
-      this.groups$= this.groupsCollection.snapshotChanges().pipe(
-        map(actions => {
-          return actions.map(a => {
-            const data = a.payload.doc.data();
-            const id = a.payload.doc.id;
-            return { id, ...data };
-          });
-        })
-      );
-    return this.groups$;
-  }
-
-  getUsers(): Observable<User[]> {
-    this.usersCollection = this.afs.collection<User>('users');
-
-      this.users$= this.usersCollection.snapshotChanges().pipe(
-        map(actions => {
-          return actions.map(a => {
-            const data = a.payload.doc.data();
-            const id = a.payload.doc.id;
-            return { id, ...data };
-          });
-        })
-      );
-    return this.users$;
+  getMembers(){
+    return this.members;
   }
 }

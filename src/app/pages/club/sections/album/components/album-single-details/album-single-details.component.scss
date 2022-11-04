@@ -18,11 +18,5 @@
 
 // custom style for references section
 ::ng-deep .album-content .mw-parser-output .mw-references-wrap{
-    background:$background-light;
-    padding:10px;
-    margin-top:25px;
-}
-
-::ng-deep .album-content .mw-parser-output .mw-references-wrap a{
-    color:$primary-text;
+   display:none;
 }

@@ -1,8 +1,40 @@
-<form class="example-form" [formGroup]="loginForm"  (ngSubmit)="logIn()">
-    <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>Email</mat-label>
-      <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com">
-      
-    </mat-form-field>
-      <button type="submit" [disabled]="!loginForm.valid">Login with Magic Auth</button>
-  </form>
+
+  <div class="center-wrapper">
+    <mat-card>
+      <h2>Sign Up</h2>
+      <form class="example-form" [formGroup]="loginForm"  (ngSubmit)="logIn()" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="15px">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Email</mat-label>
+          <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com">    
+        </mat-form-field>
+    
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Password</mat-label>
+          <input type="text" matInput formControlName="password" placeholder="password">    
+        </mat-form-field>
+    
+        <button mat-raised-button type="submit" [disabled]="!loginForm.valid">Login</button>
+
+      </form>
+    </mat-card>
+  </div>
+<!-- <div class="center-wrapper">
+  <mat-card>
+    <h2>Sign Up</h2>
+    <form class="example-form" [formGroup]="loginForm" (ngSubmit)="signUp()" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="15px">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com">    
+      </mat-form-field>
+  
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Password</mat-label>
+        <input type="text" matInput formControlName="password" placeholder="password">    
+      </mat-form-field>
+
+      <button mat-raised-button type="submit" [disabled]="!loginForm.valid">Sign Up</button>
+
+    </form>
+  </mat-card>
+</div> -->
+

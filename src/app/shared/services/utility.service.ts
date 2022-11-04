@@ -15,6 +15,12 @@ export class UtilityService {
     return lgImg["#text"];
   }
 
+  getAlbumCoverNew(res:any, size:string):void{
+    const albumCovers = res.image;
+    const lgImg = albumCovers.find(imgs => imgs.size == size);
+    return lgImg["#text"];
+  }
+
   getAlbumLength(tracklist:any):string{
     const trackTimes = [];
     tracklist.forEach(song =>{         
@@ -77,6 +83,15 @@ export class UtilityService {
     }
   
     return portions.join(' ');
+  }
+
+  getAverageScore(memberScores){
+    let sum = 0;
+    memberScores.forEach(element => {
+      sum += element.score;
+    });
+    const avg = (sum / memberScores.length) || 0;
+    return Math.round(avg * 10) / 10;    
   }
 }
 

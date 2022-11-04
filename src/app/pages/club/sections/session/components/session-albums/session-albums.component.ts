@@ -11,6 +11,7 @@ import { AlbumAddComponent } from '../../../album-add/album-add.component';
 export class SessionAlbumsComponent implements OnInit {
 
   @Input() albums;
+  @Input() session;
 
   constructor(
     public dialog: MatDialog
@@ -41,6 +42,9 @@ export class SessionAlbumsComponent implements OnInit {
       maxWidth: '100vw',
       maxHeight: '100vh',
       disableClose: true,
+      data: {
+        session: this.session,
+      },
     });
   }
 

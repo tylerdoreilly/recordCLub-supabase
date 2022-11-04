@@ -1,10 +1,11 @@
 <mat-list>
     <div mat-subheader>Results</div>
     <mat-list-item *ngFor="let result of results">
-      <img mat-list-icon [src]='result.artworkUrl60'>
+      <img mat-list-icon [src]='result.artworkUrl60' class="list-img">
       <div mat-line>{{result.artistName}}</div>
       <div mat-line>{{result.collectionName}}</div>
       <button align="end" mat-stroked-button (click)="addAlbum(result, $event)">Select Album</button>
+      <mat-divider></mat-divider>
     </mat-list-item>
-    <mat-divider></mat-divider>
+    
   </mat-list>

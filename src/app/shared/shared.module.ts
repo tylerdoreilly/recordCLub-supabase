@@ -5,6 +5,8 @@ import { MaterialModule } from './material.module';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { RouterModule, Routes, Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { ClubRoutingModule } from '../pages/club/club-routing.routes';
+import { DashboardRoutingModule } from '../pages/dashboard/dashboard-routing.routes';
+
 // HTTP
 import { HttpClientModule, HttpClientJsonpModule } from "@angular/common/http";
 import { AuthguardService } from "./services/authguard.service";
@@ -44,6 +46,7 @@ import { NavHeaderComponent } from './components/nav-header/nav-header.component
 import { UserMenuComponent } from './components/user-menu/user-menu.component';
 import { AsideBlockComponent } from './components/aside-block/aside-block.component';
 import { ColSpacerComponent } from './layouts/col-spacer/col-spacer.component';
+import { MembersSelectComponent } from './components/forms/members-select/members-select.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +73,9 @@ import { ColSpacerComponent } from './layouts/col-spacer/col-spacer.component';
     NavHeaderComponent,
     UserMenuComponent,
     AsideBlockComponent,
-    ColSpacerComponent
+    ColSpacerComponent,
+    MembersSelectComponent,
+    ClubsListComponent
     //  ClubsNavComponent
   ],
 
@@ -79,6 +84,7 @@ import { ColSpacerComponent } from './layouts/col-spacer/col-spacer.component';
     MaterialModule,
     RouterModule,
     ClubRoutingModule,
+    DashboardRoutingModule,
     FormsModule, 
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
@@ -119,7 +125,9 @@ import { ColSpacerComponent } from './layouts/col-spacer/col-spacer.component';
     NavHeaderComponent,
     UserMenuComponent,
     AsideBlockComponent,
-    ColSpacerComponent
+    ColSpacerComponent,
+    MembersSelectComponent,
+    ClubsListComponent
     // ClubsNavComponent
   ],
   providers:[ AuthguardService]

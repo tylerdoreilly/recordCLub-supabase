@@ -42,15 +42,15 @@ export class AlbumsComponent implements OnInit {
   public getRecords(){
     // this.progress.loading = true;
 
-    this._albumService.getAllAlbums()
-      .pipe(
-        // finalize(() => this.progress.loading = false)
-      )
-      .subscribe((results:any) =>{
-        this.allAlbums = results;
-        this._albumService.setAllAlbumsStore(this.allAlbums);
-        console.log('all albums',this.allAlbums)
-      })
+    // this._albumService.getAllAlbums()
+    //   .pipe(
+    //     // finalize(() => this.progress.loading = false)
+    //   )
+    //   .subscribe((results:any) =>{
+    //     this.allAlbums = results;
+    //     this._albumService.setAllAlbumsStore(this.allAlbums);
+    //     console.log('all albums',this.allAlbums)
+    //   })
   }
 
 }
