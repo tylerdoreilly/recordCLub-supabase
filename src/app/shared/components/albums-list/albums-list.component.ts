@@ -52,7 +52,7 @@ export class AlbumsListComponent implements OnInit {
 
   getData(): void {
     // this.albums$ = this._albumService.getAllAlbumsStore();
-    this.sessions$ = this._sessionsService.getSessions(this.clubId);
+    // this.sessions$ = this._sessionsService.getSessions(this.clubId);
     this.filteredAlbums$ = this.albums$;
     this.setupFilters();  
     this.sessions$.subscribe(x=>console.log('sessions',x))

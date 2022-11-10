@@ -8,6 +8,7 @@ import {
   User,
 } from '@supabase/supabase-js';
 import { environment } from 'src/environments/environment';
+import { Observable, of, combineLatest, BehaviorSubject, switchMap, map,mergeMap,from, Subject} from 'rxjs';
 import { Profile } from '../models/profile'
 import { SessionNew } from '../models/session'
 
@@ -132,6 +133,9 @@ export class SupabaseService {
   }
 
   // Sessions
+  private _clubSessions = new BehaviorSubject<any>([]);
+
+
   getSBUpcomingSession(){
     return this.supabase
       .from('sessions')
@@ -140,12 +144,27 @@ export class SupabaseService {
       .limit(1)
   }
 
-  getSBAllSessions(){
-    return this.supabase
-      .from('sessions')
-      .select(`*, seasons (title)`)
-      .order('week', { ascending: false })
+  get clubSessions(): Observable < any > {
+    return this._clubSessions.asObservable();
   }
+
+ async getSBAllSessions(){
+  const query = await this.supabase
+  .from('sessions')
+  .select('*, seasons (title, id)')
+  .order('week', { ascending: false })
+  .range(0, 9)
+
+  this._clubSessions.next(query)
+ }
+
+
+  // getSBAllSessions(){
+  //   return  this.supabase
+  //   .from('sessions')
+  //   .select(`*, seasons (title)`)
+  //   .order('week', { ascending: false })
+  // }
 
   async getSBSession(value){
     const session = await this.supabase
@@ -163,11 +182,47 @@ export class SupabaseService {
       .eq('title', filterItem)
   }
 
+  getSBSessionsBySeason(filterItem){
+    return this.supabase
+      .from('sessions')
+      .select(`*, seasons (title)`)
+      .eq('season', filterItem)
+  }
+
+  getClubSessionById(id){
+    return this.supabase
+    .from('sessions')
+    .select(`*, seasons (title)`)
+    .eq('id', id)
+  }
+
  async createSBSession(data){
   const { error } = await this.supabase
     .from('sessions')
     .insert(data)
   }
+
+  getTableChanges() {
+    const changes = new Subject();
+
+    this.supabase
+    .channel('public:sessions')
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'sessions' }, payload => {
+      changes.next(payload);
+      console.log('Change received!', payload)
+    })
+    .subscribe()
+
+    return changes.asObservable();
+  }
+
+  setSessions(items){
+    this._clubSessions.next(items)
+  }
+
+
+
+
 
   // Seasons
   getSBSeasons(){
@@ -207,6 +262,7 @@ export class SupabaseService {
   .update({ averageScore: avgScore })
   .eq('id', albumId)
  }
+
 
  // Scores
  async getAlbumScores(value){

@@ -6,15 +6,31 @@
     <h1>Sessions</h1>
 </section-header>
 
-<ng-container *ngIf="filterItems$ | async as filterItems">
-    <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="15px">
-        <auto-complete [parentForm]="sessionsFilterForm" formItemCustomName="session" filterTitle="Filter By Session" [filterItems]="filterItems.sessions"></auto-complete>
-        <auto-complete [parentForm]="sessionsFilterForm" formItemCustomName="season" filterTitle="Filter By Season" [filterItems]="filterItems.seasons"></auto-complete>
-        <div fxFlex></div>
-        <button mat-stroked-button (click)="openDialog()">Add Session</button>
-    </div>  
-</ng-container>
+<div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20px">
+    <ng-container *ngIf="filterItems$ | async as filterItems">
+        <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="15px">
+            <auto-complete [parentForm]="sessionsFilterForm" formItemCustomName="session" filterTitle="Filter By Session" [filterItems]="filterItems.sessions"></auto-complete>
+            <seasons-select [parentForm]="sessionsFilterForm" formItemCustomName="season" filterTitle="Filter By Season" [filterItems]="filterItems.seasons"></seasons-select>
+            <div fxFlex></div>
+            <button mat-stroked-button (click)="openDialog()">Add Session</button>
+        </div>  
+    </ng-container>
+    
+    <ng-container *ngIf="sessions$ | async as filteredSessions; else loadingOrError">
+        <sessions-list [sessions]="filteredSessions"></sessions-list>
+    </ng-container>
+</div>
 
-<ng-container *ngIf="filteredSessions$ | async as filteredSessions">
-    <sessions-list [sessions]="filteredSessions"></sessions-list>
-</ng-container>
+
+
+
+<ng-template #loadingOrError>
+    <ng-container *ngIf="errorObject; else loading">
+        {{errorObject}}
+    </ng-container>
+    <ng-template #loading>
+        <div class="loading">
+            Loading...
+        </div>
+    </ng-template>
+</ng-template>

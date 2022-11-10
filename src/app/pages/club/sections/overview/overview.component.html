@@ -1,34 +1,51 @@
 <section-header>
   <ul class="breadcrumb">
       <li class="breadcrumb-item"><a>Dashboard</a></li>
+      <li class="breadcrumb-item"><a>Clubs</a></li>
   </ul>
-  <h1>Club Micro</h1>
 </section-header>
 
 <ng-container *ngIf="clubData$ | async as clubData">
  
-      <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="25px">
-        <content-two-col>
-            <ng-container main>
-              <sessions-list [sessions]="clubData.latestSession.data"></sessions-list>
-              <albums-top-rated title="Top Rated Albums" [layout]="'list'" [items]="clubData.albumsOfWeek"></albums-top-rated> 
-              <albums-of-week-list [items]="clubData.albumsOfWeek | slice :0:1"></albums-of-week-list>
-            </ng-container>
-            <ng-container sidebar>
-                <col-spacer [gap]="'25px'">
-                    <aside-block>
-                       Rules
-                    </aside-block>
-                   
-                </col-spacer>
-               
-               
-               
-            </ng-container>
-        </content-two-col>
-       
+  <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="25px">
+
+    <div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="15px" class="album-modal-header">
+      <div fxFlex="80px" fxLayoutAlign="start">
+          <badge size="large">
+              <mat-icon [ngStyle]="{'color':'white'}" class="icon-lg">home</mat-icon>
+          </badge>
       </div>
-     
-      
+      <div>
+        <h1>Club Micro</h1>
+        <h2>Record Club for micros</h2>
+        <p>Started:</p>
+      </div>   
+    </div>
   
+    <mat-divider></mat-divider>
+
+    <content-two-col>
+        <ng-container main>
+          <ng-container *ngIf="clubData.counts as stats">
+            <stats [stats]="stats"></stats>
+          </ng-container>
+          <sessions-list [sessions]="clubData.latestSession.data"></sessions-list>
+          <albums-top-rated title="Top Rated Albums" [layout]="'list'" [items]="clubData.albumsOfWeek"></albums-top-rated> 
+          <albums-of-week-list [items]="clubData.albumsOfWeek | slice :0:1"></albums-of-week-list>
+        </ng-container>
+        <ng-container sidebar>
+            <col-spacer [gap]="'25px'">
+                <aside-block>
+                    Rules
+                </aside-block>
+                
+            </col-spacer>
+            
+            
+            
+        </ng-container>
+    </content-two-col>
+    
+  </div>
+     
 </ng-container>

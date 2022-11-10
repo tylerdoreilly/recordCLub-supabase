@@ -1,0 +1,16 @@
+<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+    <ng-container *ngFor="let stat of stats">
+        <mat-card fxLayout="row" fxLayoutAlgin="start center" fxLayoutGap="15px" fxFlex="25%">
+            <div fxLayout="center center">
+              <mat-icon class="stat-icon stat-album">{{stat.icon}}</mat-icon>  
+            </div>
+                    
+            <div>
+              <div class="stat-type">{{stat.title}}</div> 
+              <div class="stat-count">{{stat.count || 0}}</div> 
+            </div> 
+          </mat-card>
+    </ng-container>
+</div>
+
+

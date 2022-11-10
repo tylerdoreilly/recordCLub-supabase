@@ -1,5 +1,5 @@
 <form class="example-form" [formGroup]="parentForm">
-    <mat-form-field class="example-full-width" appearance="fill">
+    <mat-form-field class="example-full-width" appearance="fill" fxFlex>
       <mat-label>{{filterTitle}}</mat-label>
       <input type="text" matInput formControlName="{{formItemCustomName}}" [matAutocomplete]="auto">
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">

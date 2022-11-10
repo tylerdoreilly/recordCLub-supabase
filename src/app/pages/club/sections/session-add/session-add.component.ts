@@ -3,6 +3,7 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Observable, map, from} from 'rxjs';
 import { SupabaseService } from "../../../../shared/services/supabase.service";
+import { MembersService } from '../../../../shared/services/members.service';
 
 @Component({
   selector: 'app-session-add',
@@ -13,9 +14,11 @@ export class SessionAddComponent implements OnInit {
 
   public addSessionForm: FormGroup;
   public seasons$: Observable<any>;
+  public members$: Observable<any>;
 
   constructor(
     private _supabaseService: SupabaseService,
+    private _membersService: MembersService,
     private _fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any, 
   ) { }
@@ -37,6 +40,15 @@ export class SessionAddComponent implements OnInit {
       })
     )
 
+    this.members$ = this._membersService.getMembers().pipe(
+      map((members:any)=>{
+        const membersList = members.data;
+        return membersList.map(x => ({
+          id: x.id,
+          displayName: x.displayName,
+        }));            
+      })    
+    )
   }
 
   createAddSessionForm(){
@@ -46,27 +58,21 @@ export class SessionAddComponent implements OnInit {
       week:[''],
       theme: [''], 
       season: [''],
+      sessionId: [''],
       startDate: [''], 
       endDate: [''], 
       meetupDate: [''], 
-      meetupTime: [''], 
+      meetupTime: [''],
+      bracketeer: [''],  
     })
   }
 
   onValueChanges(){
     this.addSessionForm.get('week').valueChanges.subscribe(x =>{
       const title = "Week " + x.toString();
-      this.addSessionForm.get('title').patchValue(title);     
+      this.addSessionForm.get('title').patchValue(title);
+      this.addSessionForm.get('sessionId').patchValue(x);       
     });
-
-    this.addSessionForm.get('season').valueChanges.subscribe(x =>{
-     console.log('season',x.id)   
-     this.setSeasonId(x.id);
-    })      
-  }
-
-  setSeasonId(value){
-    this.addSessionForm.get('season').patchValue(value, { emitEvent: false })
   }
 
   formSubmit(form: FormGroup) {
@@ -98,5 +104,25 @@ export class SessionAddComponent implements OnInit {
     // })
     // .catch(error => console.log(error));    
   }
+
+  //////////////////////////////////
+  /// Members
+
+  // getMembers(){
+  //   this._membersService.getMembers()
+  //   .pipe(
+  //     map((members:any)=>{
+  //       const membersList = members.data;
+  //       return membersList.map(x => ({
+  //         id: x.id,
+  //         displayName: x.displayName,
+  //       }));            
+  //     })    
+  //   )
+  //   .subscribe(members =>{
+  //     this.members = members;
+  //     console.log('members',this.members)
+  //   });
+  // }
 
 }

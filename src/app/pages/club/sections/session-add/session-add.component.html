@@ -1,68 +1,84 @@
-<div mat-dialog-title>
-   Add Session
-</div>
+<form [formGroup]="addSessionForm" (ngSubmit)="formSubmit(addSessionForm)">
+
+    <div mat-dialog-title>Add Session</div>
   
-<mat-dialog-content>
-    <form [formGroup]="addSessionForm" (ngSubmit)="formSubmit(addSessionForm)">
+    <mat-dialog-content>
 
-        <div fxLayout="column" fxlayoutAlign="start stretch" fxLayoutGap="15px">
-            <mat-form-field class="example-full-width" appearance="fill">
-                <mat-label>Week Number</mat-label>
-                <input matInput type="number" formControlName="week">
-            </mat-form-field>
-    
-            <mat-form-field class="example-full-width" appearance="fill">
-                <mat-label>Theme</mat-label>
-                <input matInput type="text" formControlName="theme">
-            </mat-form-field>
+        <div fxLayout="row" fxlayoutAlign="start start" fxLayoutGap="30px">
+            <div fxFlex="50%">
+                <div class="form-section-title">General Information</div>
+                <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Week Number</mat-label>
+                        <input matInput type="number" formControlName="week">
+                    </mat-form-field>
+            
+                    <ng-container *ngIf="seasons$ | async as seasons">
+                        <seasons-select [parentForm]="addSessionForm" formItemCustomName="season" filterTitle="Select Season" [filterItems]="seasons"></seasons-select>
+                    </ng-container>
 
-            <ng-container *ngIf="seasons$ | async as seasons">
-                <auto-complete [parentForm]="addSessionForm" formItemCustomName="season" filterTitle="select Season" [filterItems]="seasons"></auto-complete>
-            </ng-container>
-           
-            <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="15px">
-                <mat-form-field appearance="fill">
-                    <mat-label>Start Date</mat-label>
-                    <input matInput [matDatepicker]="startDate" formControlName="startDate">
-                    <mat-hint>MM/DD/YYYY</mat-hint>
-                    <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
-                    <mat-datepicker #startDate></mat-datepicker>
-                </mat-form-field>
-        
-                <mat-form-field appearance="fill">
-                    <mat-label>End Date</mat-label>
-                    <input matInput [matDatepicker]="endDate" formControlName="endDate">
-                    <mat-hint>MM/DD/YYYY</mat-hint>
-                    <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
-                    <mat-datepicker #endDate></mat-datepicker>
-                </mat-form-field>
+                    <ng-container *ngIf="members$ | async as members">
+                        <members-select [parentForm]="addSessionForm" formItemCustomName="bracketeer" filterTitle="Select Bracketeer" [filterItems]="members"></members-select>
+                    </ng-container>
+                        
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Add Theme</mat-label>
+                        <input matInput type="text" formControlName="theme">
+                    </mat-form-field>
+                </div>
             </div>
-
-            <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="15px">
-                <mat-form-field appearance="fill">
-                    <mat-label>Start Date</mat-label>
-                    <input matInput [matDatepicker]="meetupDate" formControlName="meetupDate">
-                    <mat-hint>MM/DD/YYYY</mat-hint>
-                    <mat-datepicker-toggle matSuffix [for]="meetupDate"></mat-datepicker-toggle>
-                    <mat-datepicker #meetupDate></mat-datepicker>
-                </mat-form-field>
-                
-                <mat-form-field appearance="fill">
-                    <mat-label>End Date</mat-label>
-                    <input matInput type="time"  formControlName="meetupTime">              
-                    <mat-hint>MM/DD/YYYY</mat-hint>
-                    <!-- <ngx-material-timepicker #meetupTime></ngx-material-timepicker> -->
-                </mat-form-field>
-              
+            <div fxFlex="50%">
+                <div class="form-section-title">Dates and Times</div>
+                <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="25px">
+                    <div class="form-group">
+                        <div class="form-section-subTitle">Week of</div>
+                        <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="15px">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Start Date</mat-label>
+                                <input matInput [matDatepicker]="startDate" formControlName="startDate">
+                                <mat-hint>MM/DD/YYYY</mat-hint>
+                                <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+                                <mat-datepicker #startDate></mat-datepicker>
+                            </mat-form-field>
+                    
+                            <mat-form-field appearance="fill">
+                                <mat-label>End Date</mat-label>
+                                <input matInput [matDatepicker]="endDate" formControlName="endDate">
+                                <mat-hint>MM/DD/YYYY</mat-hint>
+                                <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+                                <mat-datepicker #endDate></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-section-subTitle">Meetup Date</div>
+                        <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="15px">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Start Date</mat-label>
+                                <input matInput [matDatepicker]="meetupDate" formControlName="meetupDate">
+                                <mat-hint>MM/DD/YYYY</mat-hint>
+                                <mat-datepicker-toggle matSuffix [for]="meetupDate"></mat-datepicker-toggle>
+                                <mat-datepicker #meetupDate></mat-datepicker>
+                            </mat-form-field>
+                            
+                            <mat-form-field appearance="fill" fxFlex>
+                                <mat-label>Time</mat-label>
+                                <input matInput type="time"  formControlName="meetupTime">              
+                                <mat-hint>MM/DD/YYYY</mat-hint>
+                            </mat-form-field>
+                          
+                        </div>
+                    </div>
+                   
+                </div>
             </div>
         </div>
               
-        <button mat-raised-button color="primary" type="submit">Add Session</button>
+    </mat-dialog-content>
 
-    </form>
-</mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>Cancel</button>
+        <button mat-raised-button color="primary" type="submit" [mat-dialog-close]="true">Add Session</button>
+    </mat-dialog-actions>
 
-<mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>View Artist Page</button>
-</mat-dialog-actions>
+</form>

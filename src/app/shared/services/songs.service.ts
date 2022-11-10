@@ -2,7 +2,15 @@ import { Injectable } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { map,switchMap, take } from 'rxjs/operators';
 import { HttpClient } from "@angular/common/http";
-
+import { environment } from 'src/environments/environment';
+import {
+  AuthChangeEvent,
+  AuthSession,
+  createClient,
+  Session,
+  SupabaseClient,
+  User,
+} from '@supabase/supabase-js';
 import { Song } from '../models/song';
 
 import { 
@@ -16,6 +24,7 @@ import {
   providedIn: 'root'
 })
 export class SongsService {
+  private supabase: SupabaseClient
 
   private songsCollection: AngularFirestoreCollection<Song>;
   private songWinnerCollection: AngularFirestoreCollectionGroup<Song>;
@@ -26,7 +35,27 @@ export class SongsService {
   constructor(
     private afs: AngularFirestore,
     private http: HttpClient
-  ) { }
+  ) { 
+    this.supabase = createClient(
+      environment.supabaseUrl,
+      environment.supabaseKey
+    )
+  }
+
+  /////////////////////////////////////////////////
+  // Get Songs from Supabase
+
+
+  async getSongsCount(){
+    const count = await this.supabase
+    .from('songs')
+    .select('*', { count: 'exact', head: true })
+    return count
+  }
+
+
+
+  // to delete
 
   addSong(clubId, sessionId, song: Song): Promise<DocumentReference> {
     const clubID = clubId;

@@ -1,5 +1,7 @@
+@import 'colours';
+
 .badge{
-    background:rgb(0, 82, 204);
+    background:$bdazzled-blue;
     border-radius:4px;
     color:#fff;
     text-align:center;
@@ -8,7 +10,7 @@
 .badge.large{
     height:80px;
     width:80px;
-    background:rgb(0, 82, 204);
+    background:$bdazzled-blue;
     border-radius: 4px;
  }
 
@@ -19,8 +21,8 @@
  }
 
  .badge.medium{
-    height:40px;
-    width:40px;
+    height:60px;
+    width:60px;
     background:rgb(0, 82, 204);
     border-radius: 4px;
  }

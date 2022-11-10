@@ -3,15 +3,18 @@
 
     </content-section-header>
     <mat-card>
-        <items-list [items]="sessionsList">
+        <items-list [items]="sessions">
             <ng-template let-item #header>
                 <mat-list-item [routerLink]="'/club/'+ clubId +'/session/' + item.sessionId" [state]="{data:item}">
-                    <mat-icon mat-list-icon>folder</mat-icon>
+                    <badge size="medium" mat-list-icon class="list-img">
+                        <mat-icon [ngStyle]="{'color':'white'}" class="icon-lg">event</mat-icon>
+                    </badge>
+                    <!-- <mat-icon mat-list-icon>folder</mat-icon> -->
                     <div mat-line>Week {{item.week}}</div>
                     <div mat-line> {{item.seasons.title}} </div>
                     <div mat-line>{{item.startDate | date: 'mediumDate'}} - {{item.endDate | date: 'mediumDate'}}</div> 
                 </mat-list-item>
-                <mat-divider *ngIf="sessionsList.length > 1"></mat-divider>
+                <mat-divider *ngIf="sessions.length > 1"></mat-divider>
             </ng-template>
         </items-list>
     </mat-card>

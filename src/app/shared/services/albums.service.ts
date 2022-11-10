@@ -2,14 +2,27 @@ import { Injectable } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { map,switchMap, take, retry } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { environment } from 'src/environments/environment';
+import {
+  AuthChangeEvent,
+  AuthSession,
+  createClient,
+  Session,
+  SupabaseClient,
+  User,
+} from '@supabase/supabase-js';
 
+// Models
 import { Album } from '../models/album';
 
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class AlbumsService {
+
+  private supabase: SupabaseClient
 
   // Data Stores
   private _allAlbums = new BehaviorSubject<Album[]>(null);
@@ -17,91 +30,64 @@ export class AlbumsService {
 
   private _lastFmApiKey='ea840f8b2593aebe7317b39734a186ba';
 
-  
- 
   constructor(
     private http: HttpClient
-  ) { }
+  ) { 
+    this.supabase = createClient(
+      environment.supabaseUrl,
+      environment.supabaseKey
+    )
+  }
 
   /////////////////////////////////////////////////
   // Get Albums from Supabase
 
-
-
-  // Filtered Albums
-
-  // getAlbumsOfWeek(): Observable<Album[]> {
-  //   this.albumsOfWeekCollection = this.afs.collectionGroup<Album>('albums', ref => ref.where('albumOfWeek', '==', true));
-
-  //   this.albumsOfWeek$ = this.albumsOfWeekCollection.snapshotChanges().pipe(
-  //       map(actions => {
-  //         return actions.map(a => {
-  //           const data = a.payload.doc.data();
-  //           const id = a.payload.doc.id;
-  //           return { id, ...data };
-  //         });
-  //       })
-  //     );
-  //   return this.albumsOfWeek$;
-  // }
-
-  // getAlbumsByUser(): Observable<Album[]> {
-  //   let item = 
-  //   this.albumsOfWeekCollection = this.afs.collectionGroup<Album>('albums', ref => ref.where('albumOfWeek', '==', true));
-
-  //   this.albumsOfWeek$ = this.albumsOfWeekCollection.snapshotChanges().pipe(
-  //       map(actions => {
-  //         return actions.map(a => {
-  //           const data = a.payload.doc.data();
-  //           const id = a.payload.doc.id;
-  //           return { id, ...data };
-  //         });
-  //       })
-  //     );
-  //   return this.albumsOfWeek$;
-  // }
-
-  // getAlbumsArtist(filterItem:string): Observable<Album[]> {
+  async getSessionAlbums(value){
+    const albums = await this.supabase
+    .from('albums')
+    .select('*, seasons(title,id), submittedBy(displayName,avatar,id)')
+    .eq('sessionId', value)
   
-  //   this.albumsByArtistCollection = this.afs.collectionGroup<Album>('albums', ref => ref.where('name', '==', filterItem));
+    return albums.data || [];
+   }
+  
+  async getAlbum(value){
+    const album = await this.supabase
+    .from('albums')
+    .select('*, seasons(title,id), submittedBy(displayName,avatar,id)')
+    .eq('id', value)
 
-  //   this.albumsByArtist$ = this.albumsByArtistCollection.snapshotChanges().pipe(
-  //       map(actions => {
-  //         return actions.map(a => {
-  //           const data = a.payload.doc.data();
-  //           const id = a.payload.doc.id;
-  //           return { id, ...data };
-  //         });
-  //       })
-  //     );
-  //   // this.setAlbumFilters(this.albumsByArtist$);
-  //   return this.albumsByArtist$;
-  // }
+    return album.data[0] || [];
+  }
+  
+  async createAlbum(data){
+    const { error } = await this.supabase
+      .from('albums')
+      .insert(data)
+  }
+  
+  async updateAlbumAvgScore(avgScore, albumId){
+    const { error } = await this.supabase
+    .from('albums')
+    .update({ averageScore: avgScore })
+    .eq('id', albumId)
+  }
 
-  // setAllAlbumsStore(value:any){
-  //   this._allAlbums.next(value);
-  // }
+  async getAlbumsCount(){
+    const count = await this.supabase
+    .from('albums')
+    .select('*', { count: 'exact', head: true })
+    return count
+  }
 
-  // getAllAlbumsStore(){
-  //   return this._allAlbums.asObservable();
-  // }
 
-  // setAlbumFilters(value:any){
-  //   this._filteredAlbums.next(value);
-  // }
 
-  // getAlbumFilters(){
-  //   return this._filteredAlbums.asObservable();
-  // }
 
-  // Temp Update Albums
 
-  // updateData(albumId, data: any): Promise<void> { 
-  //   return this.albumsCollection.doc(albumId).update({ 
-  //     randomizedId: data.randomizedId,
-     
-  //   });
-  // }
+
+
+
+
 
   /////////////////////////////////////////////////
   // Get Itunes Album Data
@@ -130,12 +116,14 @@ export class AlbumsService {
     return this.http.get<Observable<any>>(`http://ws.audioscrobbler.com/2.0/?method=album.getinfo&mbid=${artistMBID}&api_key=${this._lastFmApiKey}&format=json`)
   };
 
-   /////////////////////////////////////////////////
+
+  /////////////////////////////////////////////////
   // Music Brainz Data
 
   getMBRelease(mbId): Observable<any>{
     return this.http.get<Observable<any>>(`http://musicbrainz.org/ws/2/release/${mbId}?inc=artist-credits+labels+discids+recordings`);
   }
+
 
   /////////////////////////////////////////////////
   // Audio DB Data
@@ -144,6 +132,7 @@ export class AlbumsService {
     console.log(artistName);
     return this.http.get<any>(`https://www.theaudiodb.com/api/v1/json/523532/searchalbum.php?s=${artistName}&a=${albumName}`)
   };
+
 
   /////////////////////////////////////////////////
   // Discogs
@@ -166,7 +155,9 @@ export class AlbumsService {
     return this.http.get<Observable<any>>(`http://www.wikidata.org/w/api.php?action=wbgetentities&ids=${id}&format=json&origin=*`)
   }
 
-   // WIKIPEDIA
+
+  /////////////////////////////////////////////////
+  // WIKIPEDIA
   getWikiAlbum(albumName: string): Observable<any>{ 
     return this.http.get<any>(`https://en.wikipedia.org/w/api.php?action=parse&page=${albumName}&prop=text&formatversion=2&format=json&origin=*`)
   }

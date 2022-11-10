@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { Observable, forkJoin, combineLatest, of, from} from 'rxjs';
-import { switchMap, mergeMap, map, tap } from 'rxjs/operators';
+import { Observable, forkJoin, combineLatest, of, from, merge, throwError} from 'rxjs';
+import { switchMap, mergeMap, map, tap, catchError } from 'rxjs/operators';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SessionAddComponent } from '../session-add/session-add.component';
@@ -30,6 +30,7 @@ export class SessionsComponent implements OnInit {
 
   public clubId: any;
   public sessions$: Observable<any>;
+  public testTy:Observable<any>;
 
   // filters
   public session$:Observable<any>;
@@ -38,6 +39,7 @@ export class SessionsComponent implements OnInit {
   public sessionsFilterForm: FormGroup;
   public filterItems$:Observable<any>
   public filteredSessions$;
+  public errorObject;
 
   constructor(
     private _clubsService : ClubsService,
@@ -51,23 +53,54 @@ export class SessionsComponent implements OnInit {
     public afStorage: AngularFireStorage,
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this._clubsService.getClubid().subscribe(result => this.clubId = result)
-    this.getData();
-    this.setupFilters();  
+    this.getData();  
     this.createSessionsFilterForm();
     this.onValueChanges();
+    this.handleRealtimeUpdates();
   }
 
-  getData(): void {
-    this.sessions$ = from(this._supabaseService.getSBAllSessions());
-    this.sessions$.subscribe(x => console.log('sessions', x))
-    this.filteredSessions$ = this.sessions$.pipe(
+  async getData() {
+    await this._supabaseService.getSBAllSessions();
+
+    this.sessions$ = this._supabaseService.clubSessions.pipe(
       map((sessions:any)=>{
         return sessions.data
+      }),
+      catchError(error =>{
+        this.errorObject = error;
+        return throwError(() => new Error(error))
       })
     );
+
+    this.setupFilters();  
    
+  }
+
+  handleRealtimeUpdates() {   
+    this._supabaseService.getTableChanges().subscribe((update: any) => {
+      const record = update.new?.id ? update.new : update.old;
+      const event = update.eventType;
+
+      if (!record) return;
+
+      const newSession$ = from(this._supabaseService.getClubSessionById(record.id))
+
+      this.sessions$ = combineLatest([this.sessions$, newSession$]).pipe(
+        map(([firstResult, secondResult]) => {
+          if(event === 'INSERT'){
+            return [].concat(secondResult.data).concat(firstResult)
+          }
+          else if(event === 'UPDATE'){
+           console.log('UPDATE', record)
+          }
+          else if(event === 'DELETE'){
+            console.log('DELETE', record)
+          }
+        }) 
+      )
+    })
   }
 
   ////////////////////////////////////// 
@@ -76,13 +109,13 @@ export class SessionsComponent implements OnInit {
   setupFilters():void{
     this.session$ = this.sessions$.pipe(
       map((sessions:any) =>{
-        return this._setFilterItems(sessions.data, 'title');
+        return this._setFilterItems(sessions, 'title');
       })
     )
 
     this.season$ = this.sessions$.pipe(
       map((sessions:any) =>{
-        return this._setFilterItems(sessions.data.seasons, 'title');
+        return this._setSeasonFilter(sessions, 'title');
       })
     )
 
@@ -110,6 +143,28 @@ export class SessionsComponent implements OnInit {
    
   }
 
+  private _setSeasonFilter(array:any, item:any){
+
+    if(array){
+
+      let seasons = array.map(sessions =>{
+        return sessions.seasons
+      })
+
+      seasons = seasons.filter((value, index, self) =>
+        index === self.findIndex((t) => (
+          t.displayName === value.displayName && t.id === value.id
+        ))
+      )
+
+      return Array.from(seasons).map((x:any) => ({
+        displayName: x.title,
+        id:x.id
+      }));  
+     
+    }
+  }
+
 
   ////////////////////////////////////// 
   // Filter Form
@@ -124,7 +179,7 @@ export class SessionsComponent implements OnInit {
   onValueChanges(){
     this.sessionsFilterForm.get('session').valueChanges.subscribe(x =>{
       if(x == ''){
-        this.filteredSessions$ = this.sessions$.pipe(
+        this.sessions$ = this._supabaseService.clubSessions.pipe(
           map((sessions:any)=>{
             return sessions.data
           })
@@ -133,7 +188,7 @@ export class SessionsComponent implements OnInit {
       else{
         const filterTerm: string = x.displayName;
         console.log('filter', filterTerm)
-        this.filteredSessions$ = from(this._supabaseService. getSBSessionsByTitle(filterTerm)).pipe(
+        this.sessions$ = from(this._supabaseService.getSBSessionsByTitle(filterTerm)).pipe(
           map((sessions:any)=>{
             return sessions.data
           })
@@ -142,7 +197,25 @@ export class SessionsComponent implements OnInit {
      
     })
 
-   
+    this.sessionsFilterForm.get('season').valueChanges.subscribe(x =>{
+      if(x == ''){
+        this.sessions$ = this._supabaseService.clubSessions.pipe(
+          map((sessions:any)=>{
+            return sessions.data
+          })
+        );
+      }
+      else{
+        const filterTerm = x;
+        console.log('filter', filterTerm)
+        this.sessions$ = from(this._supabaseService.getSBSessionsBySeason(filterTerm)).pipe(
+          map((sessions:any)=>{
+            return sessions.data
+          })
+        );
+      }
+     
+    })
   }
 
    ////////////////////////////////////// 

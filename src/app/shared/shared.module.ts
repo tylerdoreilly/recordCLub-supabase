@@ -47,6 +47,8 @@ import { UserMenuComponent } from './components/user-menu/user-menu.component';
 import { AsideBlockComponent } from './components/aside-block/aside-block.component';
 import { ColSpacerComponent } from './layouts/col-spacer/col-spacer.component';
 import { MembersSelectComponent } from './components/forms/members-select/members-select.component';
+import { SeasonsSelectComponent } from './components/forms/seasons-select/seasons-select.component';
+import { StatsComponent } from './components/stats/stats.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +77,9 @@ import { MembersSelectComponent } from './components/forms/members-select/member
     AsideBlockComponent,
     ColSpacerComponent,
     MembersSelectComponent,
-    ClubsListComponent
+    ClubsListComponent,
+    SeasonsSelectComponent,
+    StatsComponent
     //  ClubsNavComponent
   ],
 
@@ -127,7 +131,9 @@ import { MembersSelectComponent } from './components/forms/members-select/member
     AsideBlockComponent,
     ColSpacerComponent,
     MembersSelectComponent,
-    ClubsListComponent
+    ClubsListComponent,
+    SeasonsSelectComponent,
+    StatsComponent
     // ClubsNavComponent
   ],
   providers:[ AuthguardService]

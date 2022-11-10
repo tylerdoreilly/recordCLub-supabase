@@ -11,17 +11,14 @@ export class SessionsListComponent implements OnInit {
 
   @Input() sessions:any;
   public clubId:string;
-  public sessionsList:any;
+
   constructor(
     private _clubsService: ClubsService
   ) { }
 
   ngOnInit(): void {
     this._clubsService.getClubid().subscribe((result:any) => this.clubId = result);
-    this.sessionsList = Object.values(this.sessions);
-    console.log('sessions',Object.values(this.sessionsList))
-
-   
+   console.log('sessions',this. sessions)  
   }
 
 }
